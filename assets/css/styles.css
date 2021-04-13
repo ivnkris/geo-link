@@ -9,3 +9,16 @@
 i {
   margin-left: 1rem;
 }
+
+.icon-positioning {
+  transform: translate(75%, 25%);
+}
+
+.margin-around {
+  margin: 1rem;
+  margin-left: 0;
+}
+
+.padding-within {
+  padding: 1rem;
+}
