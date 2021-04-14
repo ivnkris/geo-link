@@ -18,3 +18,9 @@
 .padding-within {
   padding: 1rem;
 }
+
+.info-container {
+  background-color: #acd473;
+  padding: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
