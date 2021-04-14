@@ -40,32 +40,47 @@
       </nav>
     </header>
 
+    <!-- Info Container -->
+    <div class="info-container text-colour margin-2 padding-3">
+      <h2 class="align-center-middle text-center">
+        "Your world at your fingertips"
+      </h2>
+      <p class="align-center-middle text-center">
+        Welcome to GeoLink !! Get started by entering your location to find your
+        local events and more...
+      </p>
+    </div>
+
     <!--form search bar-->
-    <form>
-      <div class= "row grid-x align-center grid-padding-x">
-        <div class= "small-10 large-6 columns">
-          <label>Input label
-            <input type= "text" placeholder= "Let's search!...">
+    <div class="search-form">
+      <form>
+        <div class="row grid-x align-center grid-padding-x">
+          <div class="small-10 large-6 columns">
+            <label
+              >Input label
+              <input type="text" placeholder="Type your location here" />
             </label>
-            
+
+            <label
+              >Input label
+              <input type="text" placeholder="Type your interests here" />
+            </label>
+
             <div class="input-group-button">
-              <input type="submit" class="button" value="Submit">
+              <input type="submit" class="button" value="Submit" />
             </div>
-
+          </div>
         </div>
-      </div>
-    </form>
-
-   
-      
-  
-
+      </form>
+    </div>
     <div class="callout alert grid-x">
       <h2 class="cell align-center-middle text-center">Error!</h2>
       <p class="cell align-center-middle text-center">
         City not recognised. Please check for errors and try again.
       </p>
     </div>
+
+    <div class="footer-text-colour">Footer to go</div>
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

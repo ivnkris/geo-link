@@ -18,3 +18,20 @@
 .padding-within {
   padding: 1rem;
 }
+
+.info-container {
+  background-color: #acd473;
+  padding: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.search-form {
+  background-image: url("https://images.unsplash.com/photo-1548345680-f5475ea5df84?ixid=MnwxMjA3fDB8MHxwaG90by1[…]fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.footer-text-color {
+  background-color: #acd473;
+}
