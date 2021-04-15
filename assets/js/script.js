@@ -1,12 +1,29 @@
-
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
+};
+
+const renderVenueCards = (venue) => {
+  const formattedAddress = venue.location.formattedAddress.join(", ");
+  `<div class="card cell large-3 medium-3 small-12 cards-padding">
+  <h3>${venue.name}</h3>
+  <img src="http://placehold.it/300x300" />
+  <div class="“card-section”">
+    <p>
+      Address: ${formattedAddress}
+    </p>
+  </div>
+  <button type="button" class="button radius bordered shadow primary">
+    Add to favourites
+  </button>
+</div>
+  `;
+  console.log(formattedAddress);
 };
 
 const onSubmit = async (event) => {
@@ -18,9 +35,13 @@ const onSubmit = async (event) => {
 
   const fourSquareData = await fetchData(fourSquareUrl);
 
+  const venues = fourSquareData.response.venues;
+
+  const venueCards = await venues.map(renderVenueCards);
+
   console.log(fourSquareData);
 
-
+  // console.log(venueCards);
 };
 
 $("#search-form").on("submit", onSubmit);
