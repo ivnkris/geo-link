@@ -35,3 +35,22 @@
 .footer-text-color {
   background-color: #acd473;
 }
+
+.footer-padding {
+  padding: 1rem;
+}
+
+.cards-padding {
+  padding: 0.5rem;
+}
+
+.footer-position {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.cards-margin {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
