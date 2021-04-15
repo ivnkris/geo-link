@@ -45,6 +45,19 @@ const createPlacesCards = (place) => {
   return placeCard;
 };
 
+const getLanLng = async (location) => {
+  const openCageDataURL = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=645bd41d9fc842d8a2b990b8b3dd0b26`;
+
+  const openCageData = await fetchData(openCageDataURL);
+
+  const googlePlacesCityObject = {
+    lat: openCageData.results[0].bounds.northeast.lat,
+    lng: openCageData.results[0].bounds.northeast.lng,
+  };
+
+  return googlePlacesCityObject;
+};
+
 const onSubmit = async (event) => {
   event.preventDefault();
   const location = $("#location-input").val();
@@ -60,22 +73,13 @@ const onSubmit = async (event) => {
 
   $("#cards-container").append(venueCards);
 
-  const getLanLng = async (location) => {
-    const openCageDataURL = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=645bd41d9fc842d8a2b990b8b3dd0b26`;
+  const latLngObject = await getLanLng(location);
 
-    const openCageData = await fetchData(openCageDataURL);
+  const googlePlacesURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLngObject.lat},${latLngObject.lng}&radius=500&types=${interest}&key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
-    const googlePlacesCityObject = {
-      lat: openCageData.results[0].bounds.northeast.lat,
-      lng: openCageData.results[0].bounds.northeast.lng,
-    };
+  const googlePlacesData = await fetchData(googlePlacesURL);
 
-    console.log(googlePlacesCityObject);
-
-    return;
-  };
-
-  const latLngObject = getLanLng(location);
+  console.log(googlePlacesData);
 };
 
 $("#search-form").on("submit", onSubmit);
