@@ -40,6 +40,10 @@
   padding: 1rem;
 }
 
+.cards-padding {
+  padding: 0.5rem;
+}
+
 .footer-position {
   position: absolute;
   bottom: 0;
