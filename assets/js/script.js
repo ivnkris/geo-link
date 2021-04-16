@@ -41,10 +41,10 @@ const createVenueCards = (venue) => {
       Address: ${formattedAddress}
     </p>
   </div>
-  <button type="button" id="${venue.id}" class="button radius bordered shadow success">
+  <button type="button" id="${venue.id}" data-venue=${venue.name} class="button moreInfoBtn radius bordered shadow success">
     More Information
   </button>
-  <button type="button" class="button radius bordered shadow primary">
+  <button type="button" class="button favBtn radius bordered shadow primary">
     Add to favourites
   </button>
 </div>
@@ -112,6 +112,11 @@ const onClickMoreInfo = async (event) => {
   createVenuePopup(venueData);
 };
 
+const addToFav = (event) => {
+    const NewObject = {}
+    return
+}
+
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const onSubmit = async (event) => {
   event.preventDefault();
@@ -133,7 +138,8 @@ const onSubmit = async (event) => {
 
   $("#cards-container").append(venueCards);
 
-  $(".button").on("click", onClickMoreInfo);
+  $(".moreInfoBtn").on("click", onClickMoreInfo);
+  $(".favBtn").on("click", addToFav)
 };
 
 $("#search-form").on("submit", onSubmit);
