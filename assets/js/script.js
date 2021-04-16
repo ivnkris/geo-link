@@ -3,9 +3,17 @@ let latLngObject = {
   lng: "",
 };
 
-const errorHandling = () = {
-  
-}
+const errorHandling = () => {
+  $("#cards-container").empty();
+  const errorContainer = `<div class="callout alert grid-x">
+  <h2 class="cell align-center-middle text-center">Error!</h2>
+  <p class="cell align-center-middle text-center">
+    City not recognised. Please try again.
+  </p>
+</div>`;
+  $("#cards-container").append(errorContainer);
+};
+
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
@@ -16,8 +24,7 @@ const fetchData = async (url) => {
     }
     return data;
   } catch (error) {
-  errorHandling ()
-    
+    errorHandling();
   }
 };
 
