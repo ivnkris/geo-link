@@ -68,10 +68,10 @@ const createVenueCards = (venue) => {
       Address: ${formattedAddress}
     </p>
   </div>
-  <button type="button" id="${venue.id}" class="button radius bordered shadow success">
+  <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
     More Information
   </button>
-  <button type="button" class="button radius bordered shadow primary">
+  <button type="button" name="add-favourite" class="button radius bordered shadow primary">
     Add to favourites
   </button>
 </div>
@@ -178,7 +178,7 @@ const onSubmit = async (event) => {
 
   $("#cards-container").append(venueCards);
 
-  $(".button").on("click", onClickMoreInfo);
+  $('button[name="more-info"]').on("click", onClickMoreInfo);
 };
 
 $("#search-form").on("submit", onSubmit);
