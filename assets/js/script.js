@@ -3,6 +3,18 @@ let latLngObject = {
   lng: "",
 };
 
+const getValueFromNestedObject = (
+  nestedObj = {},
+  tree = [],
+  defaultValue = ""
+) =>
+  Array.isArray(tree)
+    ? tree.reduce(
+        (obj, key) => (obj && obj[key] ? obj[key] : defaultValue),
+        nestedObj
+      )
+    : {};
+
 const errorHandling = () => {
   $("#cards-container").empty();
   const errorContainer = `<div class="callout alert grid-x">
@@ -21,8 +33,9 @@ const fetchData = async (url) => {
     const data = await response.json();
     if (data.meta.code !== 200) {
       throw new Error("Oops something went wrong!");
+    } else {
+      return data;
     }
-    return data;
   } catch (error) {
     errorHandling();
   }
@@ -89,12 +102,30 @@ const createVenuePopup = (venue) => {
   <div class='popup-box'>
   <h3>${venue.name}</h3>
   <p>
-  <strong>Opening hours:</strong> ${venue.defaultHours.status} <br>
-  <strong>Contact details:</strong> ${venue.contact.formattedPhone} <br>
-  <strong>How many people are currently in the venue:</strong> ${venue.hereNow.summary} <br>
-  <strong>Prices:</strong> ${venue.price.message} <br>
-  <strong>Rating:</strong> ${venue.rating} <br>
-  <strong>Website:</strong> <a href='${venue.url}' target="_blank">${venue.url}</a> <br>
+  <strong>Opening hours:</strong> ${getValueFromNestedObject(
+    venue,
+    ["defaultHours", "status"],
+    "Not available"
+  )} <br>
+  <strong>Contact details:</strong> ${getValueFromNestedObject(
+    venue,
+    ["contact", "formattedPhone"],
+    "Not available"
+  )} <br>
+  <strong>How many people are currently in the venue:</strong> ${getValueFromNestedObject(
+    venue,
+    ["hereNow", "summary"],
+    "Not available"
+  )} <br>
+  <strong>Prices:</strong> ${getValueFromNestedObject(
+    venue,
+    ["price", "message"],
+    "Not available"
+  )} <br>
+  <strong>Rating:</strong> ${venue.rating || "Not available"} <br>
+  <strong>Website:</strong> <a href='${
+    venue.url || "Not available"
+  }' target="_blank">${venue.url}</a> <br>
   <br/>
   <br/>
   <br>
