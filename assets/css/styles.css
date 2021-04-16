@@ -1,9 +1,34 @@
-.nav-bar-background {
-  background-color: #f7941d;
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  font-size: 0.8rem;
 }
 
 .text-colour {
   color: #fff;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;
+}
+
+.nav-bar-background {
+  background-color: #f7941d;
 }
 
 .icon-positioning {
@@ -30,6 +55,29 @@
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
+  min-height: 25vh;
+}
+
+#search-form {
+  width: 50%;
+}
+
+.cards-padding {
+  padding: 0.5rem;
+}
+
+.cards-margin {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
 }
 
 .footer-text-color {
@@ -38,19 +86,4 @@
 
 .footer-padding {
   padding: 1rem;
-}
-
-.cards-padding {
-  padding: 0.5rem;
-}
-
-.footer-position {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
-.cards-margin {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }

@@ -1,3 +1,4 @@
+// fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
@@ -8,9 +9,10 @@ const fetchData = async (url) => {
   }
 };
 
+// function to create venue cards following form submit. Returns single venue card.
 const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
-  const venueCard = `<div class="card cell large-3 medium-3 small-12 cards-padding">
+  const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
   <img src="http://placehold.it/300x300" />
   <div class="“card-section”">
@@ -28,7 +30,7 @@ const createVenueCards = (venue) => {
 };
 
 const createPlacesCards = (place) => {
-  const placeCard = `<div class="card cell large-3 medium-3 small-12 cards-padding">
+  const placeCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
   <img src="http://placehold.it/300x300" />
   <div class="“card-section”">
@@ -45,6 +47,7 @@ const createPlacesCards = (place) => {
   return placeCard;
 };
 
+// Convert city name into lat ang long coordinates using Opencagedata API. Returns object with lat and lng.
 const getLanLng = async (location) => {
   const openCageDataURL = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=645bd41d9fc842d8a2b990b8b3dd0b26`;
 
@@ -58,8 +61,10 @@ const getLanLng = async (location) => {
   return googlePlacesCityObject;
 };
 
+// Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const onSubmit = async (event) => {
   event.preventDefault();
+  $("#cards-container").empty();
   const location = $("#location-input").val();
   const interest = $("#interest-input").val();
 
