@@ -1,3 +1,8 @@
+let latLngObject = {
+  lat: "",
+  lng: "",
+};
+
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
@@ -10,9 +15,9 @@ const fetchData = async (url) => {
 };
 
 // Initialize and add the map
-const initMap = async (location) => {
+const initMap = () => {
   // The location of the marker
-  const markerPlacement = { lat: location.lat, lng: location.lng };
+  const markerPlacement = { lat: latLngObject.lat, lng: latLngObject.lng };
   // The map, centered at the marker
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 4,
@@ -26,9 +31,9 @@ const initMap = async (location) => {
 };
 
 // function to create venue cards following form submit. Returns single venue card.
-const createVenueCards = async (venue) => {
+const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
-  const venueCard = await `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
+  const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
   <div id="map"></div>
   <div class="“card-section”">
@@ -42,7 +47,7 @@ const createVenueCards = async (venue) => {
 </div>
   `;
 
-  const latLngObject = {
+  latLngObject = {
     lat: venue.location.lat,
     lng: venue.location.lng,
   };
@@ -50,9 +55,11 @@ const createVenueCards = async (venue) => {
   const googleAPI =
     "https://maps.googleapis.com/maps/api/js?key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU&callback=initMap&libraries=&v=weekly";
 
-  const googleFetchAPI = async (url) => {};
+  const googleFetchAPI = async (url) => {
+    await fetchData(url);
+  };
 
-  await googleFetchAPI(googleAPI);
+  googleFetchAPI(googleAPI);
 
   return venueCard;
 };
@@ -71,8 +78,6 @@ const onSubmit = async (event) => {
   const venues = fourSquareData.response.venues;
 
   const venueCards = await venues.map(createVenueCards);
-
-  await console.log(venueCards);
 
   $("#cards-container").append(venueCards);
 };
