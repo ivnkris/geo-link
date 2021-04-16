@@ -9,12 +9,28 @@ const fetchData = async (url) => {
   }
 };
 
+// Initialize and add the map
+const initMap = async (location) => {
+  // The location of the marker
+  const markerPlacement = { lat: location.lat, lng: location.lng };
+  // The map, centered at the marker
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: markerPlacement,
+  });
+  // The marker, positioned at the location
+  const marker = new google.maps.Marker({
+    position: markerPlacement,
+    map: map,
+  });
+};
+
 // function to create venue cards following form submit. Returns single venue card.
-const createVenueCards = (venue) => {
+const createVenueCards = async (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
-  const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
+  const venueCard = await `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
-  <img src="http://placehold.it/300x300" />
+  <div id="map"></div>
   <div class="“card-section”">
     <p>
       Address: ${formattedAddress}
@@ -26,39 +42,19 @@ const createVenueCards = (venue) => {
 </div>
   `;
 
-  return venueCard;
-};
-
-const createPlacesCards = (place) => {
-  const placeCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-  <h3>${venue.name}</h3>
-  <img src="http://placehold.it/300x300" />
-  <div class="“card-section”">
-    <p>
-      Address: ${formattedAddress}
-    </p>
-  </div>
-  <button type="button" class="button radius bordered shadow primary">
-    Add to favourites
-  </button>
-</div>
-  `;
-
-  return placeCard;
-};
-
-// Convert city name into lat ang long coordinates using Opencagedata API. Returns object with lat and lng.
-const getLanLng = async (location) => {
-  const openCageDataURL = `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=645bd41d9fc842d8a2b990b8b3dd0b26`;
-
-  const openCageData = await fetchData(openCageDataURL);
-
-  const googlePlacesCityObject = {
-    lat: openCageData.results[0].bounds.northeast.lat,
-    lng: openCageData.results[0].bounds.northeast.lng,
+  const latLngObject = {
+    lat: venue.location.lat,
+    lng: venue.location.lng,
   };
 
-  return googlePlacesCityObject;
+  const googleAPI =
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU&callback=initMap&libraries=&v=weekly";
+
+  const googleFetchAPI = async (url) => {};
+
+  await googleFetchAPI(googleAPI);
+
+  return venueCard;
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
@@ -76,15 +72,9 @@ const onSubmit = async (event) => {
 
   const venueCards = await venues.map(createVenueCards);
 
+  await console.log(venueCards);
+
   $("#cards-container").append(venueCards);
-
-  const latLngObject = await getLanLng(location);
-
-  const googlePlacesURL = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latLngObject.lat},${latLngObject.lng}&radius=500&types=${interest}&key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
-
-  const googlePlacesData = await fetchData(googlePlacesURL);
-
-  console.log(googlePlacesData);
 };
 
 $("#search-form").on("submit", onSubmit);

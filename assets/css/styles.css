@@ -73,6 +73,11 @@ p {
   margin-right: 1rem;
 }
 
+#map {
+  height: 200px;
+  width: 100%;
+}
+
 #footer {
   position: absolute;
   bottom: 0;
