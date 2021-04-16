@@ -79,7 +79,7 @@ const createVenuePopup = (venue) => {
   <strong>How many people are currently in the venue:</strong> ${venue.hereNow.summary} <br>
   <strong>Prices:</strong> ${venue.price.message} <br>
   <strong>Rating:</strong> ${venue.rating} <br>
-  <strong>Website:</strong> <a href='${venue.url}'>${venue.url}</a> <br>
+  <strong>Website:</strong> <a href='${venue.url}' target="_blank">${venue.url}</a> <br>
   <br/>
   <br/>
   <br>
