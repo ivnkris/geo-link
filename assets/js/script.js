@@ -89,8 +89,15 @@ const createVenuePopup = (venue) => {
   </div>
   </div>`;
 
-  overlay.appendTo(document.body);
+  overlay.appendTo($("#page-container"));
   overlay.append(popupCard);
+
+  const removePopup = (event) => {
+    event.preventDefault();
+    overlay.remove();
+  };
+
+  $(".close").click(removePopup);
 };
 
 const onClickMoreInfo = async (event) => {
