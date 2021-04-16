@@ -10,7 +10,7 @@ const fetchData = async (url) => {
 
 const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
-  const venueCard = `<div class="card cell large-3 medium-3 small-12 cards-padding">
+  const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
   <img src="http://placehold.it/300x300" />
   <div class="“card-section”">
@@ -28,7 +28,7 @@ const createVenueCards = (venue) => {
 };
 
 const createPlacesCards = (place) => {
-  const placeCard = `<div class="card cell large-3 medium-3 small-12 cards-padding">
+  const placeCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
   <img src="http://placehold.it/300x300" />
   <div class="“card-section”">

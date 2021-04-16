@@ -48,6 +48,8 @@
 .cards-margin {
   margin-top: 1rem;
   margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 #page-container {
@@ -72,4 +74,16 @@
 
 #search-form {
   width: 50%;
+}
+
+.width-80 {
+  width: 80%;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  font-size: 0.8rem;
 }
