@@ -139,8 +139,19 @@ const onClickMoreInfo = async (event) => {
 };
 
 const addToFav = (event) => {
-    const venueId = event.currentTarget.dataset.venue;
-    console.log(venueId);
+  const venueId = event.currentTarget.dataset.venue;
+
+  const venueMemory = localStorage.getItem("venueId");
+  console.log(venueMemory);
+  if (venueMemory === null) {
+    const localStorageData = [{ venueId: venueId }];
+    const localStorageString = JSON.stringify(localStorageData);
+
+    localStorage.setItem("venueId", localStorageString);
+  }
+
+  const localStorageData = [{ venueId: "" }];
+
   return;
 };
 
