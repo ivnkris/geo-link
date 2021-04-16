@@ -30,8 +30,12 @@ const initMap = () => {
   });
 };
 
-const onClickMoreInfo = (event) => {
-  console.log(event.currentTarget.id);
+const onClickMoreInfo = async (event) => {
+  const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&v=20210401`;
+
+  const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
+
+  console.log(fourSquareVenueData);
 };
 
 // function to create venue cards following form submit. Returns single venue card.
@@ -75,8 +79,12 @@ const createVenueCards = (venue) => {
 const onSubmit = async (event) => {
   event.preventDefault();
   $("#cards-container").empty();
+
   const location = $("#location-input").val();
   const interest = $("#interest-input").val();
+
+  $("#location-input").val("");
+  $("#interest-input").val("");
 
   const fourSquareUrl = `https://api.foursquare.com/v2/venues/search?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&near=${location}&query=${interest}&v=20210401`;
 
