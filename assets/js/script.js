@@ -139,7 +139,7 @@ const onClickMoreInfo = async (event) => {
 };
 
 const addToFav = (event) => {
-  const NewObject = {};
+  console.log("hello")
   return;
 };
 
@@ -164,7 +164,7 @@ const onSubmit = async (event) => {
 
   $("#cards-container").append(venueCards);
 
-  $(".favBtn").on("click", addToFav);
+  $('button[name="add-favourite"]').on("click", addToFav);
   $('button[name="more-info"]').on("click", onClickMoreInfo);
 };
 
