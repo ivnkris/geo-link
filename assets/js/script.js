@@ -41,28 +41,23 @@ const fetchData = async (url) => {
   }
 };
 
-// Initialize and add the map
-const initMap = () => {
-  // The location of the marker
-  const markerPlacement = { lat: latLngObject.lat, lng: latLngObject.lng };
-  // The map, centered at the marker
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: markerPlacement,
-  });
-  // The marker, positioned at the location
-  const marker = new google.maps.Marker({
-    position: markerPlacement,
-    map: map,
-  });
-};
-
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
+
+  latLngObject = {
+    lat: venue.location.lat,
+    lng: venue.location.lng,
+  };
+
+  const googleAPI = `https://maps.googleapis.com/maps/api/staticmap?center=${formattedAddress}&zoom=13&size=400x200&maptype=roadmap
+    &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
+    &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
+
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
   <h3>${venue.name}</h3>
-  <div id="map"></div>
+  <div id="map">
+  <img src="${googleAPI}"></div>
   <div class="“card-section”">
     <p>
       Address: ${formattedAddress}
@@ -76,20 +71,6 @@ const createVenueCards = (venue) => {
   </button>
 </div>
   `;
-
-  latLngObject = {
-    lat: venue.location.lat,
-    lng: venue.location.lng,
-  };
-
-  const googleAPI =
-    "https://maps.googleapis.com/maps/api/js?key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU&callback=initMap&libraries=&v=weekly";
-
-  // const googleFetchAPI = async (url) => {
-  //   await fetchData(url);
-  // };
-
-  // googleFetchAPI(googleAPI);
 
   return venueCard;
 };
