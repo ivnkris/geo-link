@@ -66,7 +66,7 @@ const createVenueCards = (venue) => {
   <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
     More Information
   </button>
-  <button type="button" name="add-favourite" class="button radius bordered shadow primary">
+  <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
     Add to favourites
   </button>
 </div>
@@ -139,7 +139,8 @@ const onClickMoreInfo = async (event) => {
 };
 
 const addToFav = (event) => {
-  console.log("hello")
+    const venueId = event.currentTarget.dataset.venue;
+    console.log(venueId);
   return;
 };
 
