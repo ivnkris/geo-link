@@ -3,14 +3,21 @@ let latLngObject = {
   lng: "",
 };
 
+const errorHandling = () = {
+  
+}
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    if (data.meta.code !== 200) {
+      throw new Error("Oops something went wrong!");
+    }
     return data;
   } catch (error) {
-    // console.log(error);
+  errorHandling ()
+    
   }
 };
 
