@@ -23,81 +23,88 @@
   </head>
 
   <body>
-    <!--header-->
-    <header id="header" class="topbar-sticky-shrink-header">
-      <nav class="top-bar nav-bar-background padding-within">
-        <div class="top-bar-left"></div>
-        <div class="top-bar-right">
-          <a
-            class="nav-bar-background text-colour margin-around"
-            href="index.html"
-            >Home</a
-          >
-          <i class="fas fa-home text-colour"></i>
-          <a
-            class="nav-bar-background text-colour margin-around"
-            href="favourites.html"
-            >Favourites</a
-          >
-          <i class="fas fa-bars text-colour"></i>
-        </div>
-      </nav>
-    </header>
-
-    <!-- Info Container -->
-    <div class="info-container text-colour margin-2 padding-3">
-      <h2 class="align-center-middle text-center">
-        "Your world at your fingertips"
-      </h2>
-      <p class="align-center-middle text-center">
-        Welcome to GeoLink !! Get started by entering your location to find your
-        local events and more...
-      </p>
-    </div>
-
-    <!--form search bar-->
-    <div class="search-form">
-      <form id="search-form">
-        <div class="row grid-x align-center grid-padding-x">
-          <div class="small-10 large-6 columns">
-            <label>
-              <input
-                type="text"
-                placeholder="Type your location here"
-                id="location-input"
-              />
-            </label>
-
-            <label>
-              <input
-                type="text"
-                placeholder="Type your interests here"
-                id="interest-input"
-              />
-            </label>
-
-            <div class="input-group-button">
-              <input type="submit" class="button" value="Submit" />
+    <div id="page-container">
+      <div id="content-wrap">
+        <!--header-->
+        <header id="header" class="topbar-sticky-shrink-header">
+          <nav class="top-bar nav-bar-background padding-within">
+            <div class="top-bar-left"></div>
+            <div class="top-bar-right">
+              <a
+                class="nav-bar-background text-colour margin-around"
+                href="index.html"
+                >Home</a
+              >
+              <i class="fas fa-home text-colour"></i>
+              <a
+                class="nav-bar-background text-colour margin-around"
+                href="favourites.html"
+                >Favourites</a
+              >
+              <i class="fas fa-bars text-colour"></i>
             </div>
-          </div>
+          </nav>
+        </header>
+
+        <!-- Info Container -->
+        <div class="info-container text-colour margin-2 padding-3">
+          <h2 class="align-center-middle text-center">
+            "Your world at your fingertips"
+          </h2>
+          <p class="align-center-middle text-center">
+            Welcome to GeoLink !! Get started by entering your location to find
+            your local events and more...
+          </p>
         </div>
-      </form>
-    </div>
-    <div class="callout alert grid-x">
-      <h2 class="cell align-center-middle text-center">Error!</h2>
-      <p class="cell align-center-middle text-center">
-        City not recognised. Please check for errors and try again.
-      </p>
-    </div>
 
-    <!--cards container-->
+        <!--form search bar-->
+        <div class="search-form">
+          <form id="search-form">
+            <div class="row grid-x align-center grid-padding-x">
+              <div class="small-10 large-6 columns">
+                <label>
+                  <input
+                    type="text"
+                    placeholder="Type your location here"
+                    id="location-input"
+                  />
+                </label>
 
-    <div class="grid-container cards-margin">
-      <div id="cards-container" class="grid-x align-spaced"></div>
-    </div>
+                <label>
+                  <input
+                    type="text"
+                    placeholder="Type your interests here"
+                    id="interest-input"
+                  />
+                </label>
 
-    <div class="row grid-x align-center nav-bar-background footer-padding">
-      This is a placeholder for the footer.
+                <div class="input-group-button">
+                  <input type="submit" class="button" value="Submit" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="callout alert grid-x">
+          <h2 class="cell align-center-middle text-center">Error!</h2>
+          <p class="cell align-center-middle text-center">
+            City not recognised. Please check for errors and try again.
+          </p>
+        </div>
+
+        <!--cards container-->
+
+        <div class="grid-container cards-margin">
+          <div id="cards-container" class="grid-x align-spaced"></div>
+        </div>
+      </div>
+
+      <div
+        id="footer"
+        class="row grid-x align-center nav-bar-background footer-padding"
+      >
+        This is a placeholder for the footer.
+      </div>
     </div>
 
     <!-- jQuery -->
