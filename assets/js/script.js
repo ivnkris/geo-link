@@ -60,6 +60,7 @@ const getLanLng = async (location) => {
 
 const onSubmit = async (event) => {
   event.preventDefault();
+  $("#cards-container").empty();
   const location = $("#location-input").val();
   const interest = $("#interest-input").val();
 
