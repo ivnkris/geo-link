@@ -30,6 +30,10 @@ const initMap = () => {
   });
 };
 
+const onClickMoreInfo = (event) => {
+  console.log(event.currentTarget.id);
+};
+
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
@@ -41,6 +45,9 @@ const createVenueCards = (venue) => {
       Address: ${formattedAddress}
     </p>
   </div>
+  <button type="button" id="${venue.id}" class="button radius bordered shadow success">
+    More Information
+  </button>
   <button type="button" class="button radius bordered shadow primary">
     Add to favourites
   </button>
@@ -55,11 +62,11 @@ const createVenueCards = (venue) => {
   const googleAPI =
     "https://maps.googleapis.com/maps/api/js?key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU&callback=initMap&libraries=&v=weekly";
 
-  const googleFetchAPI = async (url) => {
-    await fetchData(url);
-  };
+  // const googleFetchAPI = async (url) => {
+  //   await fetchData(url);
+  // };
 
-  googleFetchAPI(googleAPI);
+  // googleFetchAPI(googleAPI);
 
   return venueCard;
 };
@@ -80,6 +87,8 @@ const onSubmit = async (event) => {
   const venueCards = await venues.map(createVenueCards);
 
   $("#cards-container").append(venueCards);
+
+  $(".button").on("click", onClickMoreInfo);
 };
 
 $("#search-form").on("submit", onSubmit);
