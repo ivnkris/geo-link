@@ -3,14 +3,41 @@ let latLngObject = {
   lng: "",
 };
 
+const getValueFromNestedObject = (
+  nestedObj = {},
+  tree = [],
+  defaultValue = ""
+) =>
+  Array.isArray(tree)
+    ? tree.reduce(
+        (obj, key) => (obj && obj[key] ? obj[key] : defaultValue),
+        nestedObj
+      )
+    : {};
+
+const errorHandling = () => {
+  $("#cards-container").empty();
+  const errorContainer = `<div class="callout alert grid-x">
+  <h2 class="cell align-center-middle text-center">Error!</h2>
+  <p class="cell align-center-middle text-center">
+    City not recognised. Please try again.
+  </p>
+</div>`;
+  $("#cards-container").append(errorContainer);
+};
+
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    return data;
+    if (data.meta.code !== 200) {
+      throw new Error("Oops something went wrong!");
+    } else {
+      return data;
+    }
   } catch (error) {
-    // console.log(error);
+    errorHandling();
   }
 };
 
@@ -41,10 +68,10 @@ const createVenueCards = (venue) => {
       Address: ${formattedAddress}
     </p>
   </div>
-  <button type="button" id="${venue.id}" class="button radius bordered shadow success">
+  <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
     More Information
   </button>
-  <button type="button" class="button radius bordered shadow primary">
+  <button type="button" name="add-favourite" class="button radius bordered shadow primary">
     Add to favourites
   </button>
 </div>
@@ -75,12 +102,30 @@ const createVenuePopup = (venue) => {
   <div class='popup-box'>
   <h3>${venue.name}</h3>
   <p>
-  <strong>Opening hours:</strong> ${venue.defaultHours.status} <br>
-  <strong>Contact details:</strong> ${venue.contact.formattedPhone} <br>
-  <strong>How many people are currently in the venue:</strong> ${venue.hereNow.summary} <br>
-  <strong>Prices:</strong> ${venue.price.message} <br>
-  <strong>Rating:</strong> ${venue.rating} <br>
-  <strong>Website:</strong> <a href='${venue.url}' target="_blank">${venue.url}</a> <br>
+  <strong>Opening hours:</strong> ${getValueFromNestedObject(
+    venue,
+    ["defaultHours", "status"],
+    "Not available"
+  )} <br>
+  <strong>Contact details:</strong> ${getValueFromNestedObject(
+    venue,
+    ["contact", "formattedPhone"],
+    "Not available"
+  )} <br>
+  <strong>How many people are currently in the venue:</strong> ${getValueFromNestedObject(
+    venue,
+    ["hereNow", "summary"],
+    "Not available"
+  )} <br>
+  <strong>Prices:</strong> ${getValueFromNestedObject(
+    venue,
+    ["price", "message"],
+    "Not available"
+  )} <br>
+  <strong>Rating:</strong> ${venue.rating || "Not available"} <br>
+  <strong>Website:</strong> <a href='${
+    venue.url || "Not available"
+  }' target="_blank">${venue.url}</a> <br>
   <br/>
   <br/>
   <br>
@@ -133,7 +178,7 @@ const onSubmit = async (event) => {
 
   $("#cards-container").append(venueCards);
 
-  $(".button").on("click", onClickMoreInfo);
+  $('button[name="more-info"]').on("click", onClickMoreInfo);
 };
 
 $("#search-form").on("submit", onSubmit);
