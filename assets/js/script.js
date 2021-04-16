@@ -30,14 +30,6 @@ const initMap = () => {
   });
 };
 
-const onClickMoreInfo = async (event) => {
-  const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&v=20210401`;
-
-  const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
-
-  console.log(fourSquareVenueData);
-};
-
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCards = (venue) => {
   const formattedAddress = venue.location.formattedAddress.join(", ");
@@ -73,6 +65,42 @@ const createVenueCards = (venue) => {
   // googleFetchAPI(googleAPI);
 
   return venueCard;
+};
+
+const createVenuePopup = (venue) => {
+  const overlay = $('<div id="overlay"></div>');
+
+  const popupCard = `<div class='popup-container'>
+  <div class='popup-box'>
+  <h3>${venue.name}</h3>
+  <p>
+  <strong>Opening hours:</strong> ${venue.defaultHours.status} <br>
+  <strong>Contact details:</strong> ${venue.contact.formattedPhone} <br>
+  <strong>How many people are currently in the venue:</strong> ${venue.hereNow.summary} <br>
+  <strong>Prices:</strong> ${venue.price.message} <br>
+  <strong>Rating:</strong> ${venue.rating} <br>
+  <strong>Website:</strong> <a href='${venue.url}'>${venue.url}</a> <br>
+  <br/>
+  <br/>
+  <br>
+  <br>
+  <a href='' class='close'>Close</a>
+  </p>
+  </div>
+  </div>`;
+
+  overlay.appendTo(document.body);
+  overlay.append(popupCard);
+};
+
+const onClickMoreInfo = async (event) => {
+  const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&v=20210401`;
+
+  const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
+
+  venueData = fourSquareVenueData.response.venue;
+
+  createVenuePopup(venueData);
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
