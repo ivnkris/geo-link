@@ -42,7 +42,7 @@ const fetchData = async (url) => {
 };
 
 // function to create venue cards following form submit. Returns single venue card.
-const createVenueCards = (venue) => {
+const createVenueCard = (venue) => {
   // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
@@ -62,7 +62,7 @@ const createVenueCards = (venue) => {
         </div>
         <div class="“card-section”">
             <p>
-            Address: ${formattedAddress}
+            Address: <span>${formattedAddress}</span>
             </p>
         </div>
         <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
@@ -134,10 +134,11 @@ const onClickMoreInfo = async (event) => {
 
   const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
 
-  venueData = fourSquareVenueData.response.venue;
+  const venueData = fourSquareVenueData.response.venue;
 
   createVenuePopup(venueData);
 };
+
 const getFromLocalStorage = () => {
   const localStorageData = JSON.parse(localStorage.getItem("venueIds"));
 
@@ -147,36 +148,27 @@ const getFromLocalStorage = () => {
     return localStorageData;
   }
 };
+
 const addToFav = (event) => {
   const target = $(event.target);
   const parent = target.parent();
   const venueMemory = getFromLocalStorage();
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
-  const venueAddress = parent.find("p").text();
+  const venueAddress = parent.find("span").text();
   const venueId = parent.find("button").attr("id");
-  console.log(venueId);
 
   const venueObject = {
-    Name: venueName,
-    Image: venueImg,
-    Address: venueAddress,
-    Id: venueId,
+    name: venueName,
+    image: venueImg,
+    address: venueAddress,
+    id: venueId,
   };
-  console.log(venueObject);
 
-  venueMemory.push({ venueObject });
+  venueMemory.push(venueObject);
 
   localStorage.setItem("venueIds", JSON.stringify(venueMemory));
-  //return;
 };
-//get venue id from local storage
-const onClickFavourites = () => {
-  const favouriteVenues = localStorage.getItem("venueIds");
-
-  renderMovieCards(JSON.parse(favouriteMovies), true);
-};
-//create cards using venue Id
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const onSubmit = async (event) => {
@@ -195,7 +187,7 @@ const onSubmit = async (event) => {
 
   const venues = fourSquareData.response.venues;
 
-  const venueCards = await venues.map(createVenueCards);
+  const venueCards = await venues.map(createVenueCard);
 
   $("#cards-container").append(venueCards);
 
