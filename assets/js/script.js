@@ -43,6 +43,7 @@ const fetchData = async (url) => {
 
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCards = (venue) => {
+  // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
   latLngObject = {
@@ -55,22 +56,22 @@ const createVenueCards = (venue) => {
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-  <h3>${venue.name}</h3>
-  <div id="map">
-  <img src="${googleAPI}"></div>
-  <div class="“card-section”">
-    <p>
-      Address: ${formattedAddress}
-    </p>
-  </div>
-  <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
-    More Information
-  </button>
-  <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
-    Add to favourites
-  </button>
-</div>
-  `;
+        <h3>${venue.name}</h3>
+        <div id="map">
+            <img src="${googleAPI}">
+        </div>
+        <div class="“card-section”">
+            <p>
+            Address: ${formattedAddress}
+            </p>
+        </div>
+        <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+            More Information
+        </button>
+        <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
+            Add to favourites
+        </button>
+    </div>`;
 
   return venueCard;
 };
@@ -137,23 +138,44 @@ const onClickMoreInfo = async (event) => {
 
   createVenuePopup(venueData);
 };
+const getFromLocalStorage = () => {
+  const localStorageData = JSON.parse(localStorage.getItem("venueIds"));
 
-const addToFav = (event) => {
-  const venueId = event.currentTarget.dataset.venue;
-
-  const venueMemory = localStorage.getItem("venueId");
-  console.log(venueMemory);
-  if (venueMemory === null) {
-    const localStorageData = [{ venueId: venueId }];
-    const localStorageString = JSON.stringify(localStorageData);
-
-    localStorage.setItem("venueId", localStorageString);
+  if (localStorageData === null) {
+    return [];
+  } else {
+    return localStorageData;
   }
+};
+const addToFav = (event) => {
+  const target = $(event.target);
+  const parent = target.parent();
+  //const venueId = event.currentTarget.dataset.venue;
+  const venueMemory = getFromLocalStorage();
+  const venueName = parent.find("h3").text();
+  const venueImg = parent.find("img").attr("src");
+  const venueAddress = parent.find("p").text();
+  const venueId = parent.find("button").attr("id");
+  console.log(venueId);
 
-  const localStorageData = [{ venueId: "" }];
+  const venueObject = {
+    Name: venueName,
+    Image: venueImg,
+    Address: venueAddress,
+    Id: venueId,
+  };
+  console.log(venueObject);
+  //venueMemory.push({ venueId: venueId });
 
   return;
 };
+//get venue id from local storage
+const onClickFavourites = () => {
+  const favouriteVenues = localStorage.getItem("venueIds");
+
+  renderMovieCards(JSON.parse(favouriteMovies), true);
+};
+//create cards using venue Id
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const onSubmit = async (event) => {
