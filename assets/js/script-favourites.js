@@ -1,7 +1,9 @@
+// retrieve information from local storage and save it into favouritesObject variable
 const localStorageMemoryString = localStorage.getItem("venueIds");
 const favouritesObject = JSON.parse(localStorageMemoryString);
 console.log(favouritesObject);
 
+// if local storage is empty render an alert card
 const renderNothingInFavourites = () => {
   const emptyFavourites = `<div class="callout warning grid-x">
   <h2 class="cell align-center-middle text-center">Nothing in favourites yet</h2>
@@ -12,10 +14,12 @@ const renderNothingInFavourites = () => {
   $("#cards-container").append(emptyFavourites);
 };
 
+// if remove from favourites button  is clicked invoke this funtion to remove venue from local storage
 const onClickRemoveFavourite = () => {
   console.log("remove");
 };
 
+// on page load render favourites cards onto the page
 const renderFavouritesCard = (index) => {
   const favouritesCard = `
   <div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
@@ -42,16 +46,13 @@ const renderFavouritesCard = (index) => {
   $('button[name="remove-favourite"]').on("click", onClickRemoveFavourite);
 };
 
-const getItemsFromLocalStorage = () => {
+// on page load check if local storage is not empty and invoke function renderFavouritesCard. If local storage is empty invoke function renderNothingInFavourites
+const onReady = () => {
   if (favouritesObject) {
     $(favouritesObject).each(renderFavouritesCard);
   } else {
     renderNothingInFavourites();
   }
-};
-
-const onReady = () => {
-  getItemsFromLocalStorage();
 };
 
 $(document).ready(onReady);
