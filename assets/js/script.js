@@ -139,20 +139,10 @@ const onClickMoreInfo = async (event) => {
   createVenuePopup(venueData);
 };
 
-const getFromLocalStorage = () => {
-  const localStorageData = JSON.parse(localStorage.getItem("venueIds"));
-
-  if (localStorageData === null) {
-    return [];
-  } else {
-    return localStorageData;
-  }
-};
-
 const addToFav = (event) => {
   const target = $(event.target);
   const parent = target.parent();
-  const venueMemory = getFromLocalStorage();
+  const venueMemory = getFromLocalStorage("venueIds", []);
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
   const venueAddress = parent.find("span").text();
