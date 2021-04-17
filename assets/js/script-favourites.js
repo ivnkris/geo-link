@@ -1,8 +1,3 @@
-// retrieve information from local storage and save it into favouritesObject variable
-const localStorageMemoryString = localStorage.getItem("venueIds");
-const favouritesObject = JSON.parse(localStorageMemoryString);
-console.log(favouritesObject);
-
 // if local storage is empty render an alert card
 const renderNothingInFavourites = () => {
   const emptyFavourites = `<div class="callout warning grid-x">
@@ -15,44 +10,60 @@ const renderNothingInFavourites = () => {
 };
 
 // if remove from favourites button  is clicked invoke this funtion to remove venue from local storage
-const onClickRemoveFavourite = () => {
-  console.log("remove");
+const onClickRemoveFavourite = (event) => {
+  const target = $(event.target);
+  if (target.is('button[name="remove-favourite"]')) {
+    const venueId = target.data("venue");
+    const venues = getFromLocalStorage("venueIds", []);
+
+    const callback = (each) => venueId !== each.id;
+    const filteredVenues = venues.filter(callback);
+    localStorage.setItem("venueIds", JSON.stringify(filteredVenues));
+    renderFavouriteCards(filteredVenues);
+  }
 };
 
 // on page load render favourites cards onto the page
-const renderFavouritesCard = (index) => {
+const renderFavouritesCard = (each) => {
   const favouritesCard = `
   <div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-  <h3>${favouritesObject[index].name}</h3>
+  <h3>${each.name}</h3>
   <div id="map">
-  <img src="${favouritesObject[index].image}" />
+  <img src="${each.image}" />
   </div>
   
   <div class="“card-section”">
     <p>
-    Address: ${favouritesObject[index].address}
+    Address: ${each.address}
     </p>
   </div>
-  <button type="button" name="more-info" id="${favouritesObject[index].id}" class="button radius bordered shadow success">
+  <button type="button" name="more-info" id="${each.id}" class="button radius bordered shadow success">
   More Information
 </button>
-  <button type="button" name="remove-favourite" data-venueId="${favouritesObject[index].id}" class="button radius bordered shadow alert">
+  <button type="button" name="remove-favourite" data-venue="${each.id}" class="button radius bordered shadow alert">
     Remove from favourites
   </button>
 </div>`;
 
   $("#cards-container").append(favouritesCard);
   $('button[name="more-info"]').on("click", onClickMoreInfo);
-  $('button[name="remove-favourite"]').on("click", onClickRemoveFavourite);
 };
 
-// on page load check if local storage is not empty and invoke function renderFavouritesCard. If local storage is empty invoke function renderNothingInFavourites
-const onReady = () => {
-  if (favouritesObject) {
-    $(favouritesObject).each(renderFavouritesCard);
+const renderFavouriteCards = (favourites) => {
+  $("#cards-container").empty();
+  if (favourites.length !== 0) {
+    favourites.forEach(renderFavouritesCard);
   } else {
     renderNothingInFavourites();
   }
 };
+
+// on page load check if local storage is not empty and invoke function renderFavouritesCard. If local storage is empty invoke function renderNothingInFavourites
+const onReady = () => {
+  const favourites = getFromLocalStorage("venueIds", []);
+  renderFavouriteCards(favourites);
+};
+
+$("#cards-container").on("click", onClickRemoveFavourite);
 
 $(document).ready(onReady);
