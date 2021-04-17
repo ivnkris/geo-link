@@ -42,7 +42,8 @@ const fetchData = async (url) => {
 };
 
 // function to create venue cards following form submit. Returns single venue card.
-const createVenueCards = (venue) => {
+const createVenueCard = (venue) => {
+  // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
   latLngObject = {
@@ -55,22 +56,22 @@ const createVenueCards = (venue) => {
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-  <h3>${venue.name}</h3>
-  <div id="map">
-  <img src="${googleAPI}"></div>
-  <div class="“card-section”">
-    <p>
-      Address: ${formattedAddress}
-    </p>
-  </div>
-  <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
-    More Information
-  </button>
-  <button type="button" name="add-favourite" class="button radius bordered shadow primary">
-    Add to favourites
-  </button>
-</div>
-  `;
+        <h3>${venue.name}</h3>
+        <div id="map">
+            <img src="${googleAPI}">
+        </div>
+        <div class="“card-section”">
+            <p>
+            Address: <span>${formattedAddress}</span>
+            </p>
+        </div>
+        <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+            More Information
+        </button>
+        <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
+            Add to favourites
+        </button>
+    </div>`;
 
   return venueCard;
 };
@@ -133,9 +134,40 @@ const onClickMoreInfo = async (event) => {
 
   const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
 
-  venueData = fourSquareVenueData.response.venue;
+  const venueData = fourSquareVenueData.response.venue;
 
   createVenuePopup(venueData);
+};
+
+const getFromLocalStorage = () => {
+  const localStorageData = JSON.parse(localStorage.getItem("venueIds"));
+
+  if (localStorageData === null) {
+    return [];
+  } else {
+    return localStorageData;
+  }
+};
+
+const addToFav = (event) => {
+  const target = $(event.target);
+  const parent = target.parent();
+  const venueMemory = getFromLocalStorage();
+  const venueName = parent.find("h3").text();
+  const venueImg = parent.find("img").attr("src");
+  const venueAddress = parent.find("span").text();
+  const venueId = parent.find("button").attr("id");
+
+  const venueObject = {
+    name: venueName,
+    image: venueImg,
+    address: venueAddress,
+    id: venueId,
+  };
+
+  venueMemory.push(venueObject);
+
+  localStorage.setItem("venueIds", JSON.stringify(venueMemory));
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
@@ -155,10 +187,11 @@ const onSubmit = async (event) => {
 
   const venues = fourSquareData.response.venues;
 
-  const venueCards = await venues.map(createVenueCards);
+  const venueCards = await venues.map(createVenueCard);
 
   $("#cards-container").append(venueCards);
 
+  $('button[name="add-favourite"]').on("click", addToFav);
   $('button[name="more-info"]').on("click", onClickMoreInfo);
 };
 
