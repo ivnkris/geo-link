@@ -150,7 +150,6 @@ const getFromLocalStorage = () => {
 const addToFav = (event) => {
   const target = $(event.target);
   const parent = target.parent();
-  //const venueId = event.currentTarget.dataset.venue;
   const venueMemory = getFromLocalStorage();
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
@@ -165,9 +164,11 @@ const addToFav = (event) => {
     Id: venueId,
   };
   console.log(venueObject);
-  //venueMemory.push({ venueId: venueId });
 
-  return;
+  venueMemory.push({ venueObject });
+
+  localStorage.setItem("venueIds", JSON.stringify(venueMemory));
+  //return;
 };
 //get venue id from local storage
 const onClickFavourites = () => {
