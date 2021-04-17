@@ -1,4 +1,4 @@
-const localStorageMemoryString = localStorage.getItem("venueId");
+const localStorageMemoryString = localStorage.getItem("venueIds");
 const favouritesObject = JSON.parse(localStorageMemoryString);
 console.log(favouritesObject);
 
@@ -16,23 +16,23 @@ const onClickRemoveFavourite = () => {
   console.log("remove");
 };
 
-const renderFavouritesCards = async (each) => {
+const renderFavouritesCard = (index) => {
   const favouritesCard = `
   <div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-  <h3></h3>
+  <h3>${favouritesObject[index].name}</h3>
   <div id="map">
-  <img src="" />
+  <img src="${favouritesObject[index].image}" />
   </div>
   
   <div class="“card-section”">
     <p>
-    Address: 
+    Address: ${favouritesObject[index].address}
     </p>
   </div>
-  <button type="button" name="more-info" id="" class="button radius bordered shadow success">
+  <button type="button" name="more-info" id="${favouritesObject[index].id}" class="button radius bordered shadow success">
   More Information
 </button>
-  <button type="button" name="remove-favourite" data-venueId="" class="button radius bordered shadow alert">
+  <button type="button" name="remove-favourite" data-venueId="${favouritesObject[index].id}" class="button radius bordered shadow alert">
     Remove from favourites
   </button>
 </div>`;
@@ -44,7 +44,7 @@ const renderFavouritesCards = async (each) => {
 
 const getItemsFromLocalStorage = () => {
   if (favouritesObject) {
-    $(favouritesObject).each(renderFavouritesCards);
+    $(favouritesObject).each(renderFavouritesCard);
   } else {
     renderNothingInFavourites();
   }
