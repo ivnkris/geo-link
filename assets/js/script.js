@@ -65,12 +65,14 @@ const createVenueCard = (venue) => {
             Address: <span>${formattedAddress}</span>
             </p>
         </div>
-        <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
-            More Information
-        </button>
-        <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
-            Add to favourites
-        </button>
+        <div id="venue-card-buttons">
+          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+              More Information
+          </button>
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
+             Add to favourites
+          </button>
+        </div>
     </div>`;
 
   return venueCard;
@@ -158,6 +160,18 @@ const addToFav = (event) => {
   venueMemory.push(venueObject);
 
   localStorage.setItem("venueIds", JSON.stringify(venueMemory));
+
+  const venueCardDiv = event.target.parentElement;
+
+  event.target.remove();
+
+  const addedToFavourites = `
+  <button type="button" name="add-favourite" data-venue="${venueId}" class="button radius bordered shadow warning">
+    ✔️Added to favourites
+  </button>
+`;
+
+  $(venueCardDiv).append(addedToFavourites);
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
