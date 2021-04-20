@@ -23,7 +23,7 @@ const createVenueCard = (venue) => {
     lng: venue.location.lng,
   };
 
-  const googleAPI = `https://maps.googleapis.com/maps/api/staticmap?center=${formattedAddress}&zoom=16&size=400x200&maptype=roadmap
+  const googleAPI = `https://maps.googleapis.com/maps/api/staticmap?center=${formattedAddress}&zoom=15&size=400x200&maptype=roadmap
     &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
