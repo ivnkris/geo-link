@@ -1,20 +1,3 @@
-let latLngObject = {
-  lat: "",
-  lng: "",
-};
-
-const getValueFromNestedObject = (
-  nestedObj = {},
-  tree = [],
-  defaultValue = ""
-) =>
-  Array.isArray(tree)
-    ? tree.reduce(
-        (obj, key) => (obj && obj[key] ? obj[key] : defaultValue),
-        nestedObj
-      )
-    : {};
-
 const errorHandling = () => {
   $("#cards-container").empty();
   const errorContainer = `<div class="callout alert grid-x">
@@ -26,27 +9,12 @@ const errorHandling = () => {
   $("#cards-container").append(errorContainer);
 };
 
-// fetch data from 3rd party API
-const fetchData = async (url) => {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.meta.code !== 200) {
-      throw new Error("Oops something went wrong!");
-    } else {
-      return data;
-    }
-  } catch (error) {
-    errorHandling();
-  }
-};
-
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCard = (venue) => {
   // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
-  latLngObject = {
+  const latLngObject = {
     lat: venue.location.lat,
     lng: venue.location.lng,
   };
