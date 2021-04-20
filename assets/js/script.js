@@ -55,6 +55,21 @@ const createVenueCard = (venue) => {
     &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
+  const venueMemory = getFromLocalStorage("venueIds", []);
+
+  let favouritesButtonName = "Add to favourites";
+
+  let favouritesButtonClass = "primary";
+
+  const callback = (each) => {
+    if (each.id === venue.id) {
+      favouritesButtonName = "✔️Added to favourites";
+      favouritesButtonClass = "warning";
+    }
+  };
+
+  venueMemory.forEach(callback);
+
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
         <h3>${venue.name}</h3>
         <div id="map">
@@ -65,14 +80,12 @@ const createVenueCard = (venue) => {
             Address: <span>${formattedAddress}</span>
             </p>
         </div>
-        <div id="venue-card-buttons">
           <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
               More Information
           </button>
-          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
-             Add to favourites
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
+             ${favouritesButtonName}
           </button>
-        </div>
     </div>`;
 
   return venueCard;
