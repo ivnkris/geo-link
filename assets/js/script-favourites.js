@@ -14,11 +14,11 @@ const onClickRemoveFavourite = (event) => {
   const target = $(event.target);
   if (target.is('button[name="remove-favourite"]')) {
     const venueId = target.data("venue");
-    const venues = getFromLocalStorage("venueIds", []);
+    const venues = getFromLocalStorage("venues", []);
 
     const callback = (each) => venueId !== each.id;
     const filteredVenues = venues.filter(callback);
-    localStorage.setItem("venueIds", JSON.stringify(filteredVenues));
+    localStorage.setItem("venues", JSON.stringify(filteredVenues));
     renderFavouriteCards(filteredVenues);
   }
 };
@@ -48,7 +48,7 @@ const renderFavouritesCard = (each) => {
 </div>`;
 
   $("#cards-container").append(favouritesCard);
-  $('button[name="more-info"]').on("click", onClickMoreInfo);
+  $('button[name="more-info"]').on("click", displayMoreInfo);
 };
 
 // on page load check if favourites object, returned from local storage, is empty. If it isn't invoke renderFavouriteCards function and if it is invoke renderNothingInFavourites function
@@ -63,7 +63,7 @@ const renderFavouriteCards = (favourites) => {
 
 // on page load check if local storage is not empty and invoke function renderFavouritesCard. If local storage is empty invoke function renderNothingInFavourites
 const onReady = () => {
-  const favourites = getFromLocalStorage("venueIds", []);
+  const favourites = getFromLocalStorage("venues", []);
   renderFavouriteCards(favourites);
 };
 
