@@ -43,17 +43,19 @@ const createVenueCard = (venue) => {
         <div id="map">
             <img src="${googleAPI}">
         </div>
-        <div class="“card-section”">
+        <div class="card-section">
             <p>
             Address: <span>${formattedAddress}</span>
             </p>
         </div>
+        <div class ="card-buttons">
           <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
               More Information
           </button>
           <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
              ${favouritesButtonName}
           </button>
+        </div>
     </div>`;
 
   return venueCard;
@@ -124,7 +126,7 @@ const onClickMoreInfo = async (event) => {
 
 const addToFav = (event) => {
   const target = $(event.target);
-  const parent = target.parent();
+  const parent = target.parent().parent();
   const venueMemory = getFromLocalStorage("venueIds", []);
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
