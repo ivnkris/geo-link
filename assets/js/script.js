@@ -12,7 +12,11 @@ const errorHandling = () => {
 
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCard = (venue) => {
-  const formattedAddress = venue.location.formattedAddress.join(", ");
+  const formattedAddress = getValueFromNestedObject(
+    venue,
+    ["location", "formattedAddress"],
+    []
+  ).join(", ");
 
   const latLngObject = {
     lat: venue.location.lat,
@@ -23,20 +27,20 @@ const createVenueCard = (venue) => {
     &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
-  const venueMemory = getFromLocalStorage("venueIds", []);
+  const venues = getFromLocalStorage("venues", []);
 
   let favouritesButtonName = "Add to favourites";
 
   let favouritesButtonClass = "primary";
 
-  const callback = (each) => {
+  const checkIfFavourite = (each) => {
     if (each.id === venue.id) {
       favouritesButtonName = "✔️Added to favourites";
       favouritesButtonClass = "warning";
     }
   };
 
-  venueMemory.forEach(callback);
+  venues.forEach(checkIfFavourite);
 
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
         <h3>${venue.name}</h3>
@@ -114,21 +118,26 @@ const createVenuePopup = (venue) => {
 };
 
 // function to fetch venue specific details when more info button is clicked
-const onClickMoreInfo = async (event) => {
+const displayMoreInfo = async (event) => {
   const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&v=20210401`;
 
   const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
 
-  const venueData = fourSquareVenueData.response.venue;
+  const venueData = getValueFromNestedObject(fourSquareVenueData, [
+    "response",
+    "venue",
+  ]);
 
-  createVenuePopup(venueData);
+  if (venueData) {
+    createVenuePopup(venueData);
+  }
 };
 
 // function to add venue information to local storage when add to favourites button is clicked
 const addToFav = (event) => {
   const target = $(event.target);
   const parent = target.parent().parent();
-  const venueMemory = getFromLocalStorage("venueIds", []);
+  const venueMemory = getFromLocalStorage("venues", []);
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
   const venueAddress = parent.find("span").text();
@@ -143,7 +152,7 @@ const addToFav = (event) => {
 
   venueMemory.push(venueObject);
 
-  localStorage.setItem("venueIds", JSON.stringify(venueMemory));
+  localStorage.setItem("venues", JSON.stringify(venueMemory));
 
   const venueCardDiv = event.target.parentElement;
 
@@ -158,9 +167,19 @@ const addToFav = (event) => {
   $(venueCardDiv).append(addedToFavourites);
 };
 
+const renderVenueCards = async (venues) => {
+  const venueCards = await venues.map(createVenueCard);
+
+  $("#cards-container").append(venueCards);
+
+  $('button[name="add-favourite"]').on("click", addToFav);
+  $('button[name="more-info"]').on("click", displayMoreInfo);
+};
+
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
-const onSubmit = async (event) => {
+const handleSearch = async (event) => {
   event.preventDefault();
+
   $("#cards-container").empty();
 
   const location = $("#location-input").val();
@@ -173,14 +192,13 @@ const onSubmit = async (event) => {
 
   const fourSquareData = await fetchData(fourSquareUrl);
 
-  const venues = fourSquareData.response.venues;
+  const venues = getValueFromNestedObject(
+    fourSquareData,
+    ["response", "venues"],
+    []
+  );
 
-  const venueCards = await venues.map(createVenueCard);
-
-  $("#cards-container").append(venueCards);
-
-  $('button[name="add-favourite"]').on("click", addToFav);
-  $('button[name="more-info"]').on("click", onClickMoreInfo);
+  renderVenueCards(venues);
 };
 
-$("#search-form").on("submit", onSubmit);
+$("#search-form").on("submit", handleSearch);
