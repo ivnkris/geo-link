@@ -23,7 +23,7 @@ const onClickRemoveFavourite = (event) => {
   }
 };
 
-// on page load render favourites cards onto the page
+// on page load render favourites cards onto the page if local storage isn't empty
 const renderFavouritesCard = (each) => {
   const favouritesCard = `
   <div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
@@ -51,6 +51,7 @@ const renderFavouritesCard = (each) => {
   $('button[name="more-info"]').on("click", onClickMoreInfo);
 };
 
+// on page load check if favourites object, returned from local storage, is empty. If it isn't invoke renderFavouriteCards function and if it is invoke renderNothingInFavourites function
 const renderFavouriteCards = (favourites) => {
   $("#cards-container").empty();
   if (favourites.length !== 0) {

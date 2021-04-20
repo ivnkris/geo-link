@@ -1,3 +1,4 @@
+// function to invoke if server status isn't 200
 const errorHandling = () => {
   $("#cards-container").empty();
   const errorContainer = `<div class="callout alert grid-x">
@@ -11,7 +12,6 @@ const errorHandling = () => {
 
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCard = (venue) => {
-  // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
   const latLngObject = {
@@ -124,6 +124,7 @@ const onClickMoreInfo = async (event) => {
   createVenuePopup(venueData);
 };
 
+// function to add venue information to local storage when add to favourites button is clicked
 const addToFav = (event) => {
   const target = $(event.target);
   const parent = target.parent().parent();

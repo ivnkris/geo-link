@@ -1,3 +1,4 @@
+// function to get array from local storage and if empty return default value
 const getFromLocalStorage = (key, defaultValue) => {
   const localStorageData = JSON.parse(localStorage.getItem(key));
 
@@ -8,6 +9,7 @@ const getFromLocalStorage = (key, defaultValue) => {
   }
 };
 
+// function to get value from nested object using elements of string given as an argument and return default value if not found
 const getValueFromNestedObject = (
   nestedObj = {},
   tree = [],
