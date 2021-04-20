@@ -1,20 +1,4 @@
-let latLngObject = {
-  lat: "",
-  lng: "",
-};
-
-const getValueFromNestedObject = (
-  nestedObj = {},
-  tree = [],
-  defaultValue = ""
-) =>
-  Array.isArray(tree)
-    ? tree.reduce(
-        (obj, key) => (obj && obj[key] ? obj[key] : defaultValue),
-        nestedObj
-      )
-    : {};
-
+// function to invoke if server status isn't 200
 const errorHandling = () => {
   $("#cards-container").empty();
   const errorContainer = `<div class="callout alert grid-x">
@@ -26,27 +10,11 @@ const errorHandling = () => {
   $("#cards-container").append(errorContainer);
 };
 
-// fetch data from 3rd party API
-const fetchData = async (url) => {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    if (data.meta.code !== 200) {
-      throw new Error("Oops something went wrong!");
-    } else {
-      return data;
-    }
-  } catch (error) {
-    errorHandling();
-  }
-};
-
 // function to create venue cards following form submit. Returns single venue card.
 const createVenueCard = (venue) => {
-  // TODO fix using nested object function
   const formattedAddress = venue.location.formattedAddress.join(", ");
 
-  latLngObject = {
+  const latLngObject = {
     lat: venue.location.lat,
     lng: venue.location.lng,
   };
@@ -55,22 +23,39 @@ const createVenueCard = (venue) => {
     &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
     &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
 
+  const venueMemory = getFromLocalStorage("venueIds", []);
+
+  let favouritesButtonName = "Add to favourites";
+
+  let favouritesButtonClass = "primary";
+
+  const callback = (each) => {
+    if (each.id === venue.id) {
+      favouritesButtonName = "✔️Added to favourites";
+      favouritesButtonClass = "warning";
+    }
+  };
+
+  venueMemory.forEach(callback);
+
   const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
         <h3>${venue.name}</h3>
         <div id="map">
             <img src="${googleAPI}">
         </div>
-        <div class="“card-section”">
+        <div class="card-section">
             <p>
             Address: <span>${formattedAddress}</span>
             </p>
         </div>
-        <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
-            More Information
-        </button>
-        <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary">
-            Add to favourites
-        </button>
+        <div class ="card-buttons">
+          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+              More Information
+          </button>
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
+             ${favouritesButtonName}
+          </button>
+        </div>
     </div>`;
 
   return venueCard;
@@ -139,9 +124,10 @@ const onClickMoreInfo = async (event) => {
   createVenuePopup(venueData);
 };
 
+// function to add venue information to local storage when add to favourites button is clicked
 const addToFav = (event) => {
   const target = $(event.target);
-  const parent = target.parent();
+  const parent = target.parent().parent();
   const venueMemory = getFromLocalStorage("venueIds", []);
   const venueName = parent.find("h3").text();
   const venueImg = parent.find("img").attr("src");
@@ -158,6 +144,18 @@ const addToFav = (event) => {
   venueMemory.push(venueObject);
 
   localStorage.setItem("venueIds", JSON.stringify(venueMemory));
+
+  const venueCardDiv = event.target.parentElement;
+
+  event.target.remove();
+
+  const addedToFavourites = `
+  <button type="button" name="add-favourite" data-venue="${venueId}" class="button radius bordered shadow warning">
+    ✔️Added to favourites
+  </button>
+`;
+
+  $(venueCardDiv).append(addedToFavourites);
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.

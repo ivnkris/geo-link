@@ -73,6 +73,10 @@ p {
   margin-right: 1rem;
 }
 
+button {
+  width: 100%;
+}
+
 #map {
   height: 200px;
   width: 100%;
