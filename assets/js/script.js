@@ -1,6 +1,7 @@
 const FOURSQUARE_CLIENT_ID = "DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5";
 const FOURSQUARE_CLIENT_SECRET =
   "5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4";
+
 // function to invoke if server status isn't 200
 const errorHandling = () => {
   $("#cards-container").empty();
@@ -11,61 +12,6 @@ const errorHandling = () => {
   </p>
 </div>`;
   $("#cards-container").append(errorContainer);
-};
-
-// function to create venue cards following form submit. Returns single venue card.
-const createVenueCard = (venue) => {
-  const formattedAddress = getValueFromNestedObject(
-    venue,
-    ["location", "formattedAddress"],
-    []
-  ).join(", ");
-
-  const latLngObject = {
-    lat: venue.location.lat,
-    lng: venue.location.lng,
-  };
-
-  const googleAPI = `https://maps.googleapis.com/maps/api/staticmap?center=${formattedAddress}&zoom=15&size=400x200&maptype=roadmap
-    &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
-    &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
-
-  const venues = getFromLocalStorage("venues", []);
-
-  let favouritesButtonName = "Add to favourites";
-
-  let favouritesButtonClass = "primary";
-
-  const checkIfFavourite = (each) => {
-    if (each.id === venue.id) {
-      favouritesButtonName = "✔️Added to favourites";
-      favouritesButtonClass = "warning";
-    }
-  };
-
-  venues.forEach(checkIfFavourite);
-
-  const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
-        <h3>${venue.name}</h3>
-        <div id="map">
-            <img src="${googleAPI}">
-        </div>
-        <div class="card-section">
-            <p>
-            Address: <span>${formattedAddress}</span>
-            </p>
-        </div>
-        <div class ="card-buttons">
-          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
-              More Information
-          </button>
-          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
-             ${favouritesButtonName}
-          </button>
-        </div>
-    </div>`;
-
-  return venueCard;
 };
 
 // function to create popup when more info button is clicked
@@ -170,13 +116,81 @@ const addToFav = (event) => {
   $(venueCardDiv).append(addedToFavourites);
 };
 
-const renderVenueCards = async (venues) => {
+const navigateToEvents = (event) => {
+  const target = $(event.target);
+  const interest = target.data("interest");
+  const lat = target.data("lat");
+  const lng = target.data("lng");
+
+  window.location.href = `http://127.0.0.1:5500/events.html?interest=${interest}&lat=${lat}&lng=${lng}`;
+};
+
+const renderVenueCards = async (venues, interest) => {
+  // function to create venue cards following form submit. Returns single venue card.
+  const createVenueCard = (venue) => {
+    const formattedAddress = getValueFromNestedObject(
+      venue,
+      ["location", "formattedAddress"],
+      []
+    ).join(", ");
+
+    const latLngObject = {
+      lat: venue.location.lat,
+      lng: venue.location.lng,
+    };
+
+    const googleAPI = `https://maps.googleapis.com/maps/api/staticmap?center=${formattedAddress}&zoom=15&size=400x200&maptype=roadmap
+    &markers=color:blue%7Clabel:S%7C${latLngObject.lat},${latLngObject.lng}
+    &key=AIzaSyCSXQ8uJfo_0ylcrT6Z9_FXLzgiO9jcUkU`;
+
+    const venues = getFromLocalStorage("venues", []);
+
+    let favouritesButtonName = "Add to favourites";
+
+    let favouritesButtonClass = "primary";
+
+    const checkIfFavourite = (each) => {
+      if (each.id === venue.id) {
+        favouritesButtonName = "✔️Added to favourites";
+        favouritesButtonClass = "warning";
+      }
+    };
+
+    venues.forEach(checkIfFavourite);
+
+    const venueCard = `<div class="card cell large-3 medium-6 small-12 cards-padding cards-margin">
+        <h3>${venue.name}</h3>
+        <div id="map">
+            <img src="${googleAPI}">
+        </div>
+        <div class="card-section">
+            <p>
+            Address: <span>${formattedAddress}</span>
+            </p>
+        </div>
+        <div class ="card-buttons">
+          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+              More Information
+          </button>
+          <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow success">
+             View Events
+          </button>
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
+             ${favouritesButtonName}
+          </button>
+        </div>
+    </div>`;
+
+    return venueCard;
+  };
+
   const venueCards = await venues.map(createVenueCard);
 
   $("#cards-container").append(venueCards);
 
   $('button[name="add-favourite"]').on("click", addToFav);
   $('button[name="more-info"]').on("click", displayMoreInfo);
+  $('button[name="view-events"]').on("click", navigateToEvents);
 };
 
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
@@ -201,7 +215,7 @@ const handleSearch = async (event) => {
     []
   );
 
-  renderVenueCards(venues);
+  renderVenueCards(venues, interest);
 };
 
 $("#search-form").on("submit", handleSearch);
