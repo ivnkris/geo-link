@@ -22,12 +22,25 @@ const getValueFromNestedObject = (
       )
     : {};
 
+// function to invoke if server status isn't 200
+const errorHandling = () => {
+  $("#cards-container").empty();
+  const errorContainer = `<div class="callout alert grid-x">
+  <h2 class="cell align-center-middle text-center">Error!</h2>
+  <p class="cell align-center-middle text-center">
+    City not recognised. Please try again.
+  </p>
+</div>`;
+  $("#cards-container").append(errorContainer);
+};
+
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    if (data.meta.code !== 200) {
+    const statusCode = getValueFromNestedObject(data, ["meta", "code"]);
+    if (statusCode && statusCode !== 200) {
       throw new Error("Oops something went wrong!");
     } else {
       return data;
