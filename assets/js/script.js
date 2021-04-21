@@ -2,18 +2,6 @@ const FOURSQUARE_CLIENT_ID = "DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5";
 const FOURSQUARE_CLIENT_SECRET =
   "5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4";
 
-// function to invoke if server status isn't 200
-const errorHandling = () => {
-  $("#cards-container").empty();
-  const errorContainer = `<div class="callout alert grid-x">
-  <h2 class="cell align-center-middle text-center">Error!</h2>
-  <p class="cell align-center-middle text-center">
-    City not recognised. Please try again.
-  </p>
-</div>`;
-  $("#cards-container").append(errorContainer);
-};
-
 // function to create popup when more info button is clicked
 const createVenuePopup = (venue) => {
   const overlay = $('<div id="overlay"></div>');

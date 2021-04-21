@@ -19,12 +19,9 @@ const onReady = async () => {
   // build ticketmaster API url
   const ticketMasterApiUrl = `https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=${TICKET_MASTER_API_KEY}&keyword=${urlParams.interest}&latlong=${urlParams.lat},${urlParams.lng}`;
 
-  console.log(ticketMasterApiUrl);
-
   // fetch data from API
   const ticketMasterData = await fetchData(ticketMasterApiUrl);
-  console.log(ticketMasterData)
-  
+  console.log(ticketMasterData);
 
   // render cards
 };
