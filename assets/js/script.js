@@ -1,3 +1,6 @@
+const FOURSQUARE_CLIENT_ID = "DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5";
+const FOURSQUARE_CLIENT_SECRET =
+  "5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4";
 // function to invoke if server status isn't 200
 const errorHandling = () => {
   $("#cards-container").empty();
@@ -119,7 +122,7 @@ const createVenuePopup = (venue) => {
 
 // function to fetch venue specific details when more info button is clicked
 const displayMoreInfo = async (event) => {
-  const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&v=20210401`;
+  const fourSquareMoreInfoUrl = `https://api.foursquare.com/v2/venues/${event.currentTarget.id}?client_id=${FOURSQUARE_CLIENT_ID}&client_secret=${FOURSQUARE_CLIENT_SECRET}&v=20210401`;
 
   const fourSquareVenueData = await fetchData(fourSquareMoreInfoUrl);
 
@@ -188,7 +191,7 @@ const handleSearch = async (event) => {
   $("#location-input").val("");
   $("#interest-input").val("");
 
-  const fourSquareUrl = `https://api.foursquare.com/v2/venues/search?client_id=DLH22EORW1EKOQP5HEOCIADCUNESSGS0YB33AYNKKEUEDVQ5&client_secret=5WMAC0I3GLYX3TL2A3ZBLK1E1RDMWQJEOIPD5G2NZHKDQ5X4&near=${location}&query=${interest}&v=20210401`;
+  const fourSquareUrl = `https://api.foursquare.com/v2/venues/search?client_id=${FOURSQUARE_CLIENT_ID}&client_secret=${FOURSQUARE_CLIENT_SECRET}&near=${location}&query=${interest}&v=20210401`;
 
   const fourSquareData = await fetchData(fourSquareUrl);
 
