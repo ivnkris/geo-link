@@ -13,17 +13,59 @@ const getUrlParams = () => {
   };
 };
 
+const renderEventCards = (events) => {
+  const parent = $("#events-container");
+  const div = $("<div>").addClass("grid-x align-spaced");
+
+  const constructEventCard = (event) => {
+    console.log(event);
+    const image =
+      event.images && event.images.length > 0 && event.images[0].url;
+    const card = `<div
+      class="card cell large-3 medium-6 small-12 cards-padding cards-margin radius bordered shadow card"
+      id="card"
+    >
+      <h3 class="text-center">Hello</h3>
+      <div id="map">
+        <img src="${image}" />
+      </div>
+
+      <div class="card-section">
+        <p>Address: <span>Address</span></p>
+        <p>Address: <span>Address</span></p>
+        <p>Address: <span>Address</span></p>
+        <p>Address: <span>Address</span></p>
+      </div>
+    </div>`;
+
+    return card;
+  };
+
+  const eventCards = events.map(constructEventCard);
+
+  div.append(eventCards);
+
+  parent.append(div);
+};
+
 const onReady = async () => {
   const urlParams = getUrlParams();
 
-  // build ticketmaster API url
   const ticketMasterApiUrl = `https://app.ticketmaster.com/discovery/v2/events.json?size=10&apikey=${TICKET_MASTER_API_KEY}&keyword=${urlParams.interest}&latlong=${urlParams.lat},${urlParams.lng}`;
 
-  // fetch data from API
   const ticketMasterData = await fetchData(ticketMasterApiUrl);
-  console.log(ticketMasterData);
 
-  // render cards
+  const eventCards = getValueFromNestedObject(
+    ticketMasterData,
+    ["_embedded", "events"],
+    []
+  );
+
+  if (eventCards.length === 0) {
+    // TODO render no events found
+  } else {
+    renderEventCards(eventCards);
+  }
 };
 
 $(document).ready(onReady);
