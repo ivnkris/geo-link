@@ -7,9 +7,11 @@ const createVenuePopup = (venue) => {
   const overlay = $('<div id="overlay"></div>');
 
   const popupCard = `<div class='popup-container'>
-  <div class='popup-box'>
-  <h3>${venue.name}</h3>
+  <div class='popup-box padding-within'>
+  <h2 class="padding-3 align-center-middle text-center">${venue.name}</h2>
   <p>
+  <br>
+  <br>
   <strong>Opening hours:</strong> ${getValueFromNestedObject(
     venue,
     ["defaultHours", "status"],
@@ -35,10 +37,8 @@ const createVenuePopup = (venue) => {
     venue.url || "Not available"
   }' target="_blank">${venue.url}</a> <br>
   <br/>
-  <br/>
-  <br>
-  <br>
-  <a href='' class='close'>Close</a>
+  <div class="close-container align-center"><a href='' class='close'>Close</a></div>
+  
   </p>
   </div>
   </div>`;
@@ -173,10 +173,10 @@ const renderVenueCards = async (venues, interest) => {
           <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
               More Information
           </button>
-          <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow success">
+          <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow ">
              View Events
           </button>
-          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow warning ${favouritesButtonClass}">
              ${favouritesButtonName}
           </button>
         </div>

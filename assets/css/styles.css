@@ -10,6 +10,10 @@ p {
   font-size: 0.8rem;
 }
 
+strong {
+  font-size: 1rem;
+}
+
 .text-colour {
   color: #fff;
 }
@@ -159,6 +163,10 @@ button {
   box-shadow: 0 2px 5px #000;
 }
 
+.close-container {
+  display: flex;
+}
 .close {
   color: red;
+  font-size: large;
 }
