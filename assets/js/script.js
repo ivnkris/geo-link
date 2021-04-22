@@ -66,7 +66,6 @@ const displayMoreInfo = async (event) => {
     "response",
     "venue",
   ]);
-
   if (venueData) {
     createVenuePopup(venueData);
   }
@@ -196,6 +195,17 @@ const renderVenueCards = async (venues, interest) => {
   $('button[name="view-events"]').on("click", navigateToEvents);
 };
 
+const renderNoResults = () => {
+  $("#cards-container").empty();
+  const noResultsContainer = `<div class="callout warning grid-x">
+  <h2 class="cell align-center-middle text-center">No results.</h2>
+  <p class="cell align-center-middle text-center">
+    We did not find anything with this search query. Please try something else.
+  </p>
+</div>`;
+  $("#cards-container").append(noResultsContainer);
+};
+
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const handleSearch = async (event) => {
   event.preventDefault();
@@ -211,14 +221,17 @@ const handleSearch = async (event) => {
   const fourSquareUrl = `https://api.foursquare.com/v2/venues/search?client_id=${FOURSQUARE_CLIENT_ID}&client_secret=${FOURSQUARE_CLIENT_SECRET}&near=${location}&query=${interest}&v=20210401`;
 
   const fourSquareData = await fetchData(fourSquareUrl);
+  if (fourSquareData.response.venues.length === 0) {
+    renderNoResults();
+  } else {
+    const venues = getValueFromNestedObject(
+      fourSquareData,
+      ["response", "venues"],
+      []
+    );
 
-  const venues = getValueFromNestedObject(
-    fourSquareData,
-    ["response", "venues"],
-    []
-  );
-
-  renderVenueCards(venues, interest);
+    renderVenueCards(venues, interest);
+  }
 };
 
 $("#search-form").on("submit", handleSearch);
