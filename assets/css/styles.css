@@ -10,6 +10,14 @@ p {
   font-size: 0.8rem;
 }
 
+strong {
+  font-size: 1rem;
+}
+
+.modal-span {
+  font-size: 1rem;
+}
+
 .text-colour {
   color: #fff;
 }
@@ -148,7 +156,7 @@ button {
 
 .popup-box {
   min-width: 500px;
-  width: 500px;
+  width: 700px;
   min-height: 300px;
   margin: 100px auto;
   background: #f3f3f3;
@@ -159,6 +167,10 @@ button {
   box-shadow: 0 2px 5px #000;
 }
 
+.close-container {
+  display: flex;
+}
 .close {
   color: red;
+  font-size: large;
 }

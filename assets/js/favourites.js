@@ -38,7 +38,7 @@ const renderFavouritesCard = (each) => {
     </p>
   </div>
   <div class="card-buttons">
-    <button type="button" name="more-info" id="${each.id}" class="button radius bordered shadow success">
+    <button type="button" name="more-info" id="${each.id}" class="button radius bordered shadow secondary">
       More Information
     </button>
     <button type="button" name="view-events" data-lat="${each.lat}" data-lng="${each.lng}" data-interest="${each.interest}" class="button radius bordered shadow success">

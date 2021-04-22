@@ -42,9 +42,8 @@ const fetchData = async (url) => {
     const statusCode = getValueFromNestedObject(data, ["meta", "code"]);
     if (statusCode && statusCode !== 200) {
       throw new Error("Oops something went wrong!");
-    } else {
-      return data;
     }
+    return data;
   } catch (error) {
     errorHandling();
   }

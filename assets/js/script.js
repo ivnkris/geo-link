@@ -7,39 +7,41 @@ const createVenuePopup = (venue) => {
   const overlay = $('<div id="overlay"></div>');
 
   const popupCard = `<div class='popup-container'>
-  <div class='popup-box'>
-  <h3>${venue.name}</h3>
-  <p>
-  <strong>Opening hours:</strong> ${getValueFromNestedObject(
+  <div class='popup-box padding-within'>
+  <h2 class="padding-3 align-center-middle text-center">${venue.name}</h2>
+  <p><strong>Opening hours: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["defaultHours", "status"],
     "Not available"
-  )} <br>
-  <strong>Contact details:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>Contact details: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["contact", "formattedPhone"],
     "Not available"
-  )} <br>
-  <strong>How many people are currently in the venue:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>How many people are currently in the venue: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["hereNow", "summary"],
     "Not available"
-  )} <br>
-  <strong>Prices:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>Prices: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["price", "message"],
     "Not available"
-  )} <br>
-  <strong>Rating:</strong> ${venue.rating || "Not available"} <br>
-  <strong>Website:</strong> <a href='${
-    venue.url || "Not available"
-  }' target="_blank">${venue.url}</a> <br>
-  <br/>
-  <br/>
-  <br>
-  <br>
-  <a href='' class='close'>Close</a>
-  </p>
+  )}</span></p>
+
+  <p><strong>Rating: </strong><span class="modal-span">${
+    venue.rating || "Not available"
+  }</span></p>
+
+  <p><strong>Website: </strong><span class="modal-span"><a href='${
+    venue.url
+  }' target="_blank">${venue.url || "Not available"}</a></span></p>
+  
+  <div class="close-container align-center"><a href='' class='close'>Close</a></div>
   </div>
   </div>`;
 
@@ -64,7 +66,6 @@ const displayMoreInfo = async (event) => {
     "response",
     "venue",
   ]);
-
   if (venueData) {
     createVenuePopup(venueData);
   }
@@ -170,13 +171,13 @@ const renderVenueCards = async (venues, interest) => {
             </p>
         </div>
         <div class ="card-buttons">
-          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow secondary">
               More Information
           </button>
           <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow success">
              View Events
           </button>
-          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow ${favouritesButtonClass}">
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary ${favouritesButtonClass}">
              ${favouritesButtonName}
           </button>
         </div>
@@ -194,6 +195,17 @@ const renderVenueCards = async (venues, interest) => {
   $('button[name="view-events"]').on("click", navigateToEvents);
 };
 
+const renderNoResults = () => {
+  $("#cards-container").empty();
+  const noResultsContainer = `<div class="callout warning grid-x">
+  <h2 class="cell align-center-middle text-center">No results.</h2>
+  <p class="cell align-center-middle text-center">
+    We did not find anything with this search query. Please try something else.
+  </p>
+</div>`;
+  $("#cards-container").append(noResultsContainer);
+};
+
 // Main function that runs on form submission. Fetches data from Foursquare and Google Places APIs and renders cards.
 const handleSearch = async (event) => {
   event.preventDefault();
@@ -209,14 +221,17 @@ const handleSearch = async (event) => {
   const fourSquareUrl = `https://api.foursquare.com/v2/venues/search?client_id=${FOURSQUARE_CLIENT_ID}&client_secret=${FOURSQUARE_CLIENT_SECRET}&near=${location}&query=${interest}&v=20210401`;
 
   const fourSquareData = await fetchData(fourSquareUrl);
+  if (fourSquareData.response.venues.length === 0) {
+    renderNoResults();
+  } else {
+    const venues = getValueFromNestedObject(
+      fourSquareData,
+      ["response", "venues"],
+      []
+    );
 
-  const venues = getValueFromNestedObject(
-    fourSquareData,
-    ["response", "venues"],
-    []
-  );
-
-  renderVenueCards(venues, interest);
+    renderVenueCards(venues, interest);
+  }
 };
 
 $("#search-form").on("submit", handleSearch);
