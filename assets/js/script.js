@@ -9,37 +9,39 @@ const createVenuePopup = (venue) => {
   const popupCard = `<div class='popup-container'>
   <div class='popup-box padding-within'>
   <h2 class="padding-3 align-center-middle text-center">${venue.name}</h2>
-  <p>
-  <br>
-  <br>
-  <strong>Opening hours:</strong> ${getValueFromNestedObject(
+  <p><strong>Opening hours: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["defaultHours", "status"],
     "Not available"
-  )} <br>
-  <strong>Contact details:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>Contact details: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["contact", "formattedPhone"],
     "Not available"
-  )} <br>
-  <strong>How many people are currently in the venue:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>How many people are currently in the venue: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["hereNow", "summary"],
     "Not available"
-  )} <br>
-  <strong>Prices:</strong> ${getValueFromNestedObject(
+  )}</span></p>
+
+  <p><strong>Prices: </strong><span class="modal-span">${getValueFromNestedObject(
     venue,
     ["price", "message"],
     "Not available"
-  )} <br>
-  <strong>Rating:</strong> ${venue.rating || "Not available"} <br>
-  <strong>Website:</strong> <a href='${
-    venue.url || "Not available"
-  }' target="_blank">${venue.url}</a> <br>
-  <br/>
-  <div class="close-container align-center"><a href='' class='close'>Close</a></div>
+  )}</span></p>
+
+  <p><strong>Rating: </strong><span class="modal-span">${
+    venue.rating || "Not available"
+  }</span></p>
+
+  <p><strong>Website: </strong><span class="modal-span"><a href='${
+    venue.url
+  }' target="_blank">${venue.url || "Not available"}</a></span></p>
   
-  </p>
+  <div class="close-container align-center"><a href='' class='close'>Close</a></div>
   </div>
   </div>`;
 
