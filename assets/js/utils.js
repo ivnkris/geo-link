@@ -34,6 +34,17 @@ const errorHandling = () => {
   $("#cards-container").append(errorContainer);
 };
 
+const noResults = () => {
+  $("#cards-container").empty();
+  const noResultsContainer = `<div class="callout warning grid-x">
+  <h2 class="cell align-center-middle text-center">No results.</h2>
+  <p class="cell align-center-middle text-center">
+    We did not find anything with this search query. Please try something else.
+  </p>
+</div>`;
+  $("#cards-container").append(noResultsContainer);
+};
+
 // fetch data from 3rd party API
 const fetchData = async (url) => {
   try {
@@ -42,8 +53,10 @@ const fetchData = async (url) => {
     const statusCode = getValueFromNestedObject(data, ["meta", "code"]);
     if (statusCode && statusCode !== 200) {
       throw new Error("Oops something went wrong!");
-    } else {
+    } else if (data.response.venues.length > 0) {
       return data;
+    } else {
+      noResults();
     }
   } catch (error) {
     errorHandling();
