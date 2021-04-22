@@ -22,17 +22,17 @@ const renderEventCards = (events) => {
     const image =
       event.images && event.images.length > 0 && event.images[0].url;
     const card = `<div
-      class="card cell large-9 medium-9 small-12 cards-padding cards-margin radius bordered shadow card"
+      class="card cell large-11 medium-11 small-12 cards-padding cards-margin radius bordered shadow card"
       id="card"
     >
-      <h3 class="text-center">Hello</h3>
+      <h3 class="text-center">${event.name}</h3>
       <div class="event-card">
 
-      <div class="card-section">
-        <p>Address: <span>Address</span></p>
-        <p>Address: <span>Address</span></p>
-        <p>Address: <span>Address</span></p>
-        <p>Address: <span>Address</span></p>
+      <div class="card-section event-details">
+        <p><strong>Date:</strong> <span>${event.dates.start.localDate}, ${event.dates.start.localTime}</span></p>
+        <p><strong>Venue:</strong> <span>${event._embedded.venues[0].name}</span></p>
+        <p><strong>Address:</strong> <span>${event._embedded.venues[0].address.line1}, ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].postalCode}</span></p>
+        <p><span><a href="${event.url}">Buy your ticket here!</a></span></p>
       </div>
 
       <div class="event-image-container" id="map">

@@ -105,6 +105,10 @@ button {
   border-radius: 5px;
 }
 
+.event-details {
+  max-width: 35%;
+}
+
 #footer {
   position: absolute;
   bottom: 0;
