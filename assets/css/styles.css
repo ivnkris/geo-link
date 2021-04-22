@@ -89,6 +89,22 @@ button {
   width: 100%;
 }
 
+.event-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.event-image-container {
+  max-width: 60%;
+}
+
+.event-image {
+  max-height: 100%;
+  float: right;
+  border-radius: 5px;
+}
+
 #footer {
   position: absolute;
   bottom: 0;

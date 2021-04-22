@@ -22,19 +22,22 @@ const renderEventCards = (events) => {
     const image =
       event.images && event.images.length > 0 && event.images[0].url;
     const card = `<div
-      class="card cell large-3 medium-6 small-12 cards-padding cards-margin radius bordered shadow card"
+      class="card cell large-9 medium-9 small-12 cards-padding cards-margin radius bordered shadow card"
       id="card"
     >
       <h3 class="text-center">Hello</h3>
-      <div id="map">
-        <img src="${image}" />
-      </div>
+      <div class="event-card">
 
       <div class="card-section">
         <p>Address: <span>Address</span></p>
         <p>Address: <span>Address</span></p>
         <p>Address: <span>Address</span></p>
         <p>Address: <span>Address</span></p>
+      </div>
+
+      <div class="event-image-container" id="map">
+        <img class="event-image" src="${image}" />
+      </div>
       </div>
     </div>`;
 
