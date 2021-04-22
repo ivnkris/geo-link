@@ -172,13 +172,13 @@ const renderVenueCards = async (venues, interest) => {
             </p>
         </div>
         <div class ="card-buttons">
-          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow success">
+          <button type="button" name="more-info" id="${venue.id}" class="button radius bordered shadow secondary">
               More Information
           </button>
-          <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow ">
+          <button type="button" name="view-events" data-lat="${latLngObject.lat}" data-lng="${latLngObject.lng}" data-interest="${interest}" class="button radius bordered shadow success">
              View Events
           </button>
-          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow warning ${favouritesButtonClass}">
+          <button type="button" name="add-favourite" data-venue="${venue.id}" class="button radius bordered shadow primary ${favouritesButtonClass}">
              ${favouritesButtonName}
           </button>
         </div>
