@@ -25,14 +25,37 @@ const renderEventCards = (events) => {
       class="card cell large-11 medium-11 small-12 cards-padding cards-margin radius bordered shadow card"
       id="card"
     >
-      <h3 class="text-center">${event.name}</h3>
+
+        <h3 class="text-center">${event.name}</h3>
+
       <div class="event-card">
 
       <div class="card-section event-details">
-        <p><strong>Date:</strong> <span>${event.dates.start.localDate}, ${event.dates.start.localTime}</span></p>
-        <p><strong>Venue:</strong> <span>${event._embedded.venues[0].name}</span></p>
-        <p><strong>Address:</strong> <span>${event._embedded.venues[0].address.line1}, ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].postalCode}</span></p>
-        <p><span><a href="${event.url}">Buy your ticket here!</a></span></p>
+        <p><strong>Date:</strong> <span> ${moment(
+          event.dates.start.localDate
+        ).format("ddd, Do MMM YYYY")}</span></p>
+        <p><strong>Time:</strong> <span>${
+          event.dates.start.localTime
+        }</span></p>
+
+        <p><strong>Venue:</strong> <span>${
+          event._embedded.venues[0].name
+        }</span></p>
+        <p><strong>Address:</strong> <span>${
+          event._embedded.venues[0].address.line1
+        }, ${event._embedded.venues[0].city.name}, ${
+      event._embedded.venues[0].postalCode
+    }</span></p>
+        <p>
+          <span class="margin-right">
+            <a href="${event.url}" target="_blank">Buy your ticket here!</a>
+          </span>
+         ${
+           event.ageRestrictions.legalAgeEnforced
+             ? '<img src="https://icon-library.net//images/age-icon-png/age-icon-png-5.jpg" width="32" />'
+             : ""
+         }
+        </p>
       </div>
 
       <div class="event-image-container" id="map">

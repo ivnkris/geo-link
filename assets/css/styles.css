@@ -44,6 +44,10 @@ p {
   margin-right: 0;
 }
 
+.margin-right {
+  margin-right: 1rem;
+}
+
 .padding-within {
   padding: 1rem;
 }
