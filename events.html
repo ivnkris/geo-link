@@ -19,9 +19,65 @@
       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
       crossorigin="anonymous"
     />
+    <!-- google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&family=Raleway:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
+    <div id="page-container">
+      <div id="content-wrap">
+        <!--header-->
+        <header id="header" class="topbar-sticky-shrink-header">
+          <nav class="top-bar nav-bar-background padding-within">
+            <div class="top-bar-left">
+              <div>
+                <img src="assets/images/logo.png" />
+              </div>
+            </div>
+            <div class="top-bar-right">
+              <a
+                class="nav-bar-background text-colour margin-around"
+                href="index.html"
+                >Home</a
+              >
+              <i class="fas fa-home text-colour"></i>
+              <a
+                class="nav-bar-background text-colour margin-around"
+                href="favourites.html"
+                >Favourites</a
+              >
+              <i class="fas fa-bars text-colour"></i>
+            </div>
+          </nav>
+        </header>
+
+        <!-- Info Container -->
+        <div class="info-container text-colour margin-2 padding-3">
+          <h2 class="align-center-middle text-center">
+            "Your world at your fingertips"
+          </h2>
+          <p class="align-center-middle text-center">
+            Use Geo Link to find events near you and more!
+          </p>
+        </div>
+      </div>
+      <div
+        class="cards-container align-center border-box"
+        id="events-container"
+      ></div>
+      <div
+        id="footer"
+        class="row grid-x align-center nav-bar-background footer-padding"
+      >
+        mindbenders not-yet-Inc. 2021
+      </div>
+    </div>
+    </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Foundation CSS framework JavaScript -->
