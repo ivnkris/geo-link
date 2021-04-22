@@ -18,7 +18,6 @@ const renderEventCards = (events) => {
   const div = $("<div>").addClass("grid-x align-spaced");
 
   const constructEventCard = (event) => {
-    console.log(event);
     const image =
       event.images && event.images.length > 0 && event.images[0].url;
     const card = `<div

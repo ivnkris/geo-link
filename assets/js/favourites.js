@@ -41,6 +41,9 @@ const renderFavouritesCard = (each) => {
     <button type="button" name="more-info" id="${each.id}" class="button radius bordered shadow success">
       More Information
     </button>
+    <button type="button" name="view-events" data-lat="${each.lat}" data-lng="${each.lng}" data-interest="${each.interest}" class="button radius bordered shadow success">
+      View Events
+    </button>
     <button type="button" name="remove-favourite" data-venue="${each.id}" class="button radius bordered shadow alert">
       Remove from favourites
     </button>
@@ -49,6 +52,7 @@ const renderFavouritesCard = (each) => {
 
   $("#cards-container").append(favouritesCard);
   $('button[name="more-info"]').on("click", displayMoreInfo);
+  $('button[name="view-events"]').on("click", navigateToEvents);
 };
 
 // on page load check if favourites object, returned from local storage, is empty. If it isn't invoke renderFavouriteCards function and if it is invoke renderNothingInFavourites function

@@ -79,12 +79,21 @@ const addToFav = (event) => {
   const venueImg = parent.find("img").attr("src");
   const venueAddress = parent.find("span").text();
   const venueId = parent.find("button").attr("id");
+  const lat = target.parent().find('button[name="view-events"]').data("lat");
+  const lng = target.parent().find('button[name="view-events"]').data("lng");
+  const interest = target
+    .parent()
+    .find('button[name="view-events"]')
+    .data("interest");
 
   const venueObject = {
     name: venueName,
     image: venueImg,
     address: venueAddress,
     id: venueId,
+    lat,
+    lng,
+    interest,
   };
 
   venueMemory.push(venueObject);
@@ -110,7 +119,11 @@ const navigateToEvents = (event) => {
   const lat = target.data("lat");
   const lng = target.data("lng");
 
-  window.location.href = `http://127.0.0.1:5500/events.html?interest=${interest}&lat=${lat}&lng=${lng}`;
+  // uncomment the line when testing locally
+  // const BASE_URL = "http://127.0.0.1:5500"
+  const BASE_URL = "http://krisztianivan.com";
+
+  window.location.href = `${BASE_URL}/events.html?interest=${interest}&lat=${lat}&lng=${lng}`;
 };
 
 const renderVenueCards = async (venues, interest) => {
