@@ -13,7 +13,13 @@ https://github.com/ivnkris/geo-link
 
 ## Contributors
 
-name as a github links
+- Kris Ivan
+- Syreeta
+- Nazia
+- Farah
+- Eti Priya
+
+https://github.com/ivnkris/geo-link
 
 ## Description of the website
 
@@ -22,22 +28,50 @@ This website searches the interests and near by places to meet up and make new f
 - A home page which has interests search button and location button.
 - One needs to enter both and click on search. It will show you the information through various cards.
 - You could select the location and to whom so ever you would like to meet according to your choice.
-- Anyone could add the location to their favourities and have a look at them at a later stage.
+- Anyone could add the location to their favourites and have a look at them at a later stage.
 - It also gives you information regarding the selected location as name of the location, address of the location and map also.
-- In this website, it is easy to create a bundle of cards in your favoirities by just clicking on "Add to my favourities" button.
+- In this website, it is easy to create a bundle of cards in your favourites by just clicking on "Add to my favourites" button.
 - If you click on "More Information" card, it will give you more information for the clicked location.
-- In this website, you could easily remove a card from your favourities.
+- In this website, you could easily remove a card from your favourites.
 - This website is easy to use and keep a record of the places where you would like to go again.
 
 ## Screenshots
 
-mobile, tablet and screen
+Before Refractor
+
+![image](assets/images/geo-link-draft.jpg)
+
+After refractor
+
+- Homepage
+
+![image](assets/images/homepage.png)
+
+- Favourites Page
+
+![image](assets/images/favourites.png)
+
+- More information page
+
+![image](assets/images/more-info.png)
+
+- Tablet Screen shot
+
+![image](assets/images/tablet-screenshot.png)
+
+- Mobile screen shot
+
+![image](assets/images/mobile-screenshot.png)
+
+- Event information
+
+![image](assets/images/event.png)
 
 ## Link to the deployed application
 
 https://ivnkris.github.io/geo-link/
 
-# Project Overview
+## Project Overview
 
 In the midst of lockdown, our project Geo-link aims to connect and bring people of different backgrounds together based on their location and common interest. Hence, bringing normality back to our daily lives.
 
@@ -45,17 +79,23 @@ In the midst of lockdown, our project Geo-link aims to connect and bring people 
 
 - Real-time event monitoring
 - Allow user to save their favourite events for future
-- Enhance user on boarding for a smooth user experience
+- Enhance user experience on the events happening at that venue.
 
 ## Getting started
 
-readme stuff
+We started the project with the following steps:
+
+- We created a mockup image about the requirements.
+- We started with HTML and CSS coding by using foundation CSS.
+- Then we moved into JS coding and attaching the API's with the code.
+- We checked the result at every moment with console.log.
+- We verified the result and then completed the task.
 
 ## Project Charter
 
 Geo link is a project which is build on an idea of connecting people in such tough times. The high-level planning included a documentation of the requirements and creating a mock-up of the website page and extended pages.
 
-**Key requirement** - tasks, roles and responsibilities were allotted at the starting of the project. Two people were doing HTML and CSS. Rest were searching for the API's to be used. We used:
+**Key requirement** - tasks, roles and responsibilities were allotted at the starting of the project. We used:
 
 - Wire frames - Mock flow
 - Mock ups - Adobe CS
@@ -64,33 +104,44 @@ Geo link is a project which is build on an idea of connecting people in such tou
 
 ## User Journeys
 
-> Make a search - location and interest
+- **Make a search** - User could use this webite easily on his mobile, tablet or computer and find a location according to his interest.
+- **Meeting up single or multiple people** - user could click on the event and move to that event and enjoy by meeting up many people at once.
 
-> View more information about a single venue.
+- **View more information about a single venue.** - Any user could click on "more information" button and view the details about that place like date, time, venue and event.
 
-> Add/remove your favorite venues.
+- **Add/remove your favorite venues** - User could easily remove an event or venue from favourite page by just clicking on "Remove Button".
 
-> View events within 50 miles of a venue.
+- **View events within 50 miles of a venue** - This website helps to look at the events happening within 50 miles of range.
 
 ## Project Retrospective
 
-Geo link is a wonderful platform which helps people communicate and meetup easily. It depends on the interests and various activities which everyone used to do. Geo link is a handy guide wrapped up in an interactive app which brings back multiple results with proper location, map and venue, for a single search.
+**Work done**
 
-We all learned a lot during this project. It helped us understand the usage of various API's, foundation for CSS design, local storage and also coding the JS by using JQuery. This project could be improved by adding more details about the events that will be happening in near future and giving a reminder to every individual for the same.
+- Geo link is a wonderful platform which helps people communicate and meetup easily.
+- Geo link is a handy guide wrapped up in an interactive app which brings back multiple results with proper location, map and venue, for a single search.
+- It depends on the interests and various activities which everyone used to do.
+
+**Learning**
+
+- It helped us understand the usage of various API's, foundation for CSS design, local storage.
+- It also helped us understand the JS coding by using JQuery.
+
+**Improvements to be made**
+
+- This project could be improved by adding more details about the events that will be happening in near future.
+- Also, we could add a reminder for every individual for the events which they have added to favourite.
 
 **Lessons learnt** : We learned about various things:
 
-> Related to API - We looked into influence of an API on the project.
+- **Related to API** - We looked into influence of an API on the project as using Google maps API was a bit difficult.
 
-> Foursquare - It will be deprecated in a week and it lacked certain elements and it was difficult to use.
+- **Foursquare API** - It will be deprecated in a week and it lacked certain elements and it was difficult to use.
 
-> Ticket Master API - This will also be deprecated.
+- **Ticket Master API** - This will also be deprecated and it was new to use.
 
-> Google Maps - We got a problem to use google maps as GitHub pages doesn't recognize google map.
+- **Google Maps** - We got a problem to use google maps as GitHub pages doesn't recognize google map.
 
-> Sass application - This has not been recoganized, we need to implement it in other applications.
-
-//Every project is a learning opportunity. What went well? What could be improved next time? After you conclude the project, sit together with your team and do a project retrospective. Document your lessons learned in a separate document and use it as a reference for your next project.//
+- **Sass application** - This was not recognised well, we need to implement it in other applications.
 
 # Timeline
 
@@ -105,20 +156,22 @@ For each task,
 - Project documentation - 1day
 - Full project - 90 hours
 
-[https://www.figma.com/file/9kp8xHn0n6ycmW9P2Fk238/Project-timeline?node-id=0%3A1](https://www.figma.com/file/9kp8xHn0n6ycmW9P2Fk238/Project-timeline?node-id=0%3A1)
-
 # Results
 
-_Objectives were achieved as below:_
+Objectives were achieved as below:
 
-> Our website instantly grabs user location data on load.
+- Our website instantly grabs user location data on load.
 
-> It shows the number of events happening at that time.
+- It adds the cards to favorite page on one click.
 
-> It adds the cards to favorite page on one click.
+- It removes a favorite card easily from favorite page.
 
-> It removes a favorite card easily from favorite page.
+- It gives more information about the place on click of "more information".
 
-> It gives more information about the place on click of "more information".
+- It gives full details related to a location which includes date, time, venue and address.
 
-> It easily comes back to the home page.
+- It shows the number of events happening at that time.
+
+- It shows the more information,view events and remove the card from favorite on favorite page.
+
+- It easily comes back to the home page.
