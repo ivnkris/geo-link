@@ -13,13 +13,12 @@ https://github.com/ivnkris/geo-link
 
 ## Contributors
 
-- Kris Ivan
-- Syreeta
-- Nazia
-- Farah
-- Eti Priya
+- Kris Ivan - https://github.com/ivnkris/geo-link
+- Syreeta - https://github.com/SyreetaC
 
-https://github.com/ivnkris/geo-link
+- Nazia - https://github.com/Nrasool21
+- Farah - https://github.com/EEErban
+- Eti Priya - https://github.com/Etipriya
 
 ## Description of the website
 
