@@ -68,7 +68,7 @@ After refractor
 
 ## Link to the deployed application
 
-https://ivnkris.github.io/geo-link/
+https://krisztianivan.com
 
 ## Project Overview
 
